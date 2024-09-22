@@ -3,9 +3,10 @@
 Timebank::Timebank() {
 	numberOfAccounts = 0;
 	currentAccount = nullptr;
+	timer = new Timer();
 }
 
-Timebank::~Timebank() { deleteAllAccounts(); }
+Timebank::~Timebank() { deleteAllAccounts(); delete timer; }
 
 int Timebank::getNumberOfAccounts() { return numberOfAccounts; }
 
@@ -21,7 +22,9 @@ void Timebank::createAccount(std::string name) {
 
 	numerateAccounts(numberOfAccounts - 1);
 
-	if (numberOfAccounts <= 1) { currentAccount = Accounts[0]; } //When we create first account
+	if (numberOfAccounts <= 1) { 
+		currentAccount = Accounts[0]; //If we create first account
+	}
 }
 void Timebank::changeAccount(int index) {
 	if (index < 0 || index > Accounts.size()
@@ -37,15 +40,18 @@ void Timebank::deleteAccount(int index) {
 
 	if (numberOfAccounts > 1) {
 		if (currentAccount == Accounts[index]) {
-			currentAccount = Accounts[index + (index == 0 ? 1 : -1)];
+			int newIndex = index + (index == 0 ? 1 : -1); //Decreases index by 1 if there is more than 
+														  //1 acc and we are not in the 1st one.
+														  //If we are in the 1st acc, we increase index by 1
+			currentAccount = Accounts[newIndex];
 		}
-		numerateAccounts(index);
 	}
-	else { currentAccount = nullptr; }
+	else { currentAccount = nullptr; } //If there is only 1 acc
 
 	delete Accounts[index];
 	Accounts.erase(Accounts.begin() + index);
 	numberOfAccounts--;
+	numerateAccounts(index);
 }
 void Timebank::deleteAllAccounts() {
 	for (Account* item : Accounts) { delete item; }

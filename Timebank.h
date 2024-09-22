@@ -1,8 +1,9 @@
 #ifndef TIMEBANK_H
 #define TIMEBANK_H
-#include <iostream> //Delete this in future
+#include <iostream> //Delete this and all std::cout in future
 #include <vector>
 #include "Account.h"
+#include "Timer.h"
 #include "UsefullStuff.h"
 
 class Timebank
@@ -10,6 +11,7 @@ class Timebank
 private:
 	std::vector<Account*> Accounts;
 	Account* currentAccount;
+	Timer* timer;
 	int numberOfAccounts;
 	void numerateAccounts(int start); //User dont have to use it
 
