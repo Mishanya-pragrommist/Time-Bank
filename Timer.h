@@ -5,7 +5,7 @@
 class Timer
 {
 private:
-	Time wastingTime;
+	Timer wastingTime;
 
 public:
 	Timer();

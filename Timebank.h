@@ -2,6 +2,7 @@
 #define TIMEBANK_H
 #include <iostream> //Delete this and all std::cout in future
 #include <vector>
+#include "nlohmann/json.hpp"
 #include "Account.h"
 #include "Timer.h"
 #include "UsefullStuff.h"
@@ -12,12 +13,23 @@ private:
 	std::vector<Account*> Accounts;
 	Account* currentAccount;
 	Timer* timer;
+
+	//For saving and reading data
+	std::string savingFile;
+	nlohmann::json jwrite, jread;
+
 	int numberOfAccounts;
 	void numerateAccounts(int start); //User dont have to use it
 
 public:
 	Timebank();
 	~Timebank();
+
+	//To save data in .json file and read from them
+	void addAccount(std::string name, int accountID,
+		int hours, int minutes, int seconds);
+	void writeToFile();
+	void readFromFile(Account& acc);
 
 	//To manage accounts
 	void createAccount(std::string name);

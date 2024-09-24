@@ -157,6 +157,9 @@
     <ClInclude Include="UsefullStuff.h" />
     <ClInclude Include="Timebank.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="save\savings.json" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

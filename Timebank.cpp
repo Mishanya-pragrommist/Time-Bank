@@ -3,10 +3,51 @@
 Timebank::Timebank() {
 	numberOfAccounts = 0;
 	currentAccount = nullptr;
+	savingFile = "save/savings.json";
 	timer = new Timer();
 }
 
 Timebank::~Timebank() { deleteAllAccounts(); delete timer; }
+
+void Timebank::addAccount(std::string name, int accountID,
+	int hours, int minutes, int seconds) {
+	std::string objectName = "Account #" + std::to_string(accountID);
+	jwrite[objectName] = {
+		{"name", name},
+		{"hours", hours},
+		{"minutes", minutes},
+		{"seconds", seconds},
+		{"ID", accountID} };
+	jwrite["Timebank"][{"numberOfAccounts", numberOfAccounts}];
+}
+void Timebank::writeToFile() {
+	std::ofstream fout;
+	fout.open(savingFile);
+	if (!fout.is_open()) {
+		std::cout << "Error: fout wasnt open\n"; 
+		return;
+	}
+
+	fout << jwrite.dump(4);
+	fout.close();
+}
+void Timebank::readFromFile(Account& acc) {
+	std::ifstream fin;
+	std::string objectName = "Account #" + std::to_string(acc.getAccountID());
+	fin.open(savingFile);
+	if (!fin.is_open()) {
+		std::cout << "Error: fin wasnt open\n"; return;
+	}
+
+	nlohmann::json jread;
+	fin >> jread;
+	acc.setName(jread[objectName]["name"].get<std::string>());
+	acc.setID(jread[objectName]["ID"].get<int>());
+	acc.updateTimeResourse(jread[objectName]["hours"].get<int>(),
+		jread[objectName]["minutes"].get<int>(),
+		jread[objectName]["seconds"].get<int>());
+	fin.close();
+}
 
 int Timebank::getNumberOfAccounts() { return numberOfAccounts; }
 
