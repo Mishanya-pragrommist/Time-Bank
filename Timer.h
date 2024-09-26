@@ -11,6 +11,9 @@ public:
 	Timer();
 
 	void enterTime(int hours, int minutes, int seconds);
+	void addHours(int hours);
+	void addMinutes(int minutes);
+	void addSeconds(int seconds);
 };
 
 #endif

@@ -1,10 +1,10 @@
 {
     "Account #1": {
         "accountID": 1,
-        "hours": 12,
-        "minutes": 23,
+        "hours": 0,
+        "minutes": 0,
         "name": "kirieshka",
-        "seconds": 34
+        "seconds": 0
     },
     "Timebank": {
         "numberOfAccounts": 1

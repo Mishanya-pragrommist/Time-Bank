@@ -1,12 +1,15 @@
 #ifndef TIMEACCOUNT_H
 #define TIMEACCOUNT_H
-#include <iostream>
+#include <iostream> //Delete this in future
 #include "UsefullStuff.h"
+#include "Timer.h"
 
 class Account
 {
 private:
 	Time TimeResourse;
+	Timer* timer;
+	
 	std::string name;
 	int accountID;
 
@@ -33,7 +36,6 @@ public:
 	void substractSeconds(int seconds);
 
 	void printDataAboutAccount(); //Maybe I will delete it in future
-	Time getTimeResourse(); //Not that useful thing than I thought, so I probably remove it
 };
 
 #endif

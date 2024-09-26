@@ -13,8 +13,7 @@ class Timebank
 private:
 	std::vector<Account*> Accounts;
 	Account* currentAccount;
-	Timer* timer;
-
+	
 	//For saving and reading data
 	std::string savingFilePath = "save/savings.json";
 	nlohmann::json jwrite, jread;
@@ -55,6 +54,8 @@ public:
 	void substractHours(int hours); //Substracting time
 	void substractMinutes(int minutes);
 	void substractSeconds(int seconds);
+
+	void startTimer();
 };
 
 #endif

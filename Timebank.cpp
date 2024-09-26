@@ -2,14 +2,12 @@
 
 Timebank::Timebank() {
 	currentAccount = nullptr;
-	timer = new Timer();
 	readFromFile();
 }
 
 Timebank::~Timebank() { 
 	writeToFile();
 	deleteAllAccounts();
-	delete timer; 
 }
 
 void Timebank::writeToFile() {
@@ -148,6 +146,10 @@ void Timebank::substractMinutes(int minutes) {
 void Timebank::substractSeconds(int seconds) {
 	if (seconds == 0) { return; }
 	currentAccount->substractSeconds(seconds);
+}
+
+void Timebank::startTimer() {
+
 }
 
 void Timebank::printCurrentAccount() {

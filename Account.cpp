@@ -7,6 +7,8 @@ Account::Account(std::string name, int accountID, int hours, int minutes, int se
     TimeResourse.hours = hours;
     TimeResourse.minutes = minutes;
     TimeResourse.seconds = seconds;
+
+    timer = new Timer();
 }
 Account::Account(std::string name) {
     this->name = name;
@@ -14,6 +16,11 @@ Account::Account(std::string name) {
     TimeResourse.hours = 0;
     TimeResourse.minutes = 0;
     TimeResourse.seconds = 0;
+
+    wastingTime.hours = 0;
+    wastingTime.minutes = 0;
+    wastingTime.seconds = 0;
+    timer = new Timer();
 }
 
 //Getters and setters
@@ -60,6 +67,7 @@ void Account::substractHours(int hours) {
         return;
     }
     TimeResourse.hours -= hours;
+
 }
 void Account::substractMinutes(int minutes) {
     if (minutes > TimeResourse.minutes) {
