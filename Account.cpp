@@ -1,11 +1,19 @@
 #include "Account.h"
 
+Account::Account(std::string name, int accountID, int hours, int minutes, int seconds) {
+    this->name = name;
+    this->accountID = accountID;
+
+    TimeResourse.hours = hours;
+    TimeResourse.minutes = minutes;
+    TimeResourse.seconds = seconds;
+}
 Account::Account(std::string name) {
+    this->name = name;
+
     TimeResourse.hours = 0;
     TimeResourse.minutes = 0;
     TimeResourse.seconds = 0;
-
-    this->name = name;
 }
 
 //Getters and setters
@@ -14,7 +22,10 @@ void Account::setID(int numberOfAccount) { this->accountID = numberOfAccount; }
 
 std::string Account::getName() { return name; }
 int Account::getAccountID() { return accountID; }
-Time Account::getTimeResourse() { return TimeResourse; }
+
+int Account::getHours() { return TimeResourse.hours; }
+int Account::getMinutes() { return TimeResourse.minutes; }
+int Account::getSeconds() { return TimeResourse.seconds; }
 
 void Account::updateTimeResourse(int hours, int minutes, int secs) {
     TimeResourse.hours = hours;

@@ -20,8 +20,8 @@ int main()
     std::string name;
     Timebank timebank; //It contains all of the accounts where you can handle your time
 
-    std::cout << "Creating 1st account: enter the name of acc: "; std::getline(std::cin, name);
-    timebank.createAccount(name);
+    /*std::cout << "Creating 1st account: enter the name of acc: "; std::getline(std::cin, name);
+    timebank.createAccount(name);*/
 
     //Main cycle of programm
     while (command != STOP) {
@@ -71,7 +71,7 @@ int main()
 
 void startWork_handler(Timebank& timebank, int& command) {
     std::string name;
-    if (timebank.getNumberOfAccounts() == 0) {
+    if (timebank.getNumberOfAccounts() <= 0) {
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cout << "Create new account and enter name of it: ";

@@ -11,11 +11,16 @@ private:
 	int accountID;
 
 public:
+	Account(std::string name, int ID, int hours, int minutes, int second);
 	Account(std::string name);
 	void setName(std::string name);
 	void setID(int numberOfAccount);
 	int getAccountID();
 	std::string getName();
+
+	int getHours();
+	int getMinutes();
+	int getSeconds();
 
 	void updateTimeResourse(int hours, int minutes, int secs);
 
