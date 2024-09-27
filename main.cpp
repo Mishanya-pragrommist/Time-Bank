@@ -37,13 +37,16 @@ int main()
         case PRINTALLACCOUNTS:
             printAllAccounts_handler(timebank);
             break;
+        case STARTTIMER:
+            timebank.startTimer();
+            break;
         case CREATEACCOUNT:
             createAccount_handler(timebank);
             break;
         case RENAMECURRENTACC:
             renameCurrentAccount_handler(timebank);
             break;
-        case DELETE:
+        case DELETEACC:
             deleteAccount_handler(timebank);
             break;
         case GOTO:
@@ -66,19 +69,19 @@ void startWork_handler(Timebank& timebank, int& command) {
     std::string name;
     if (timebank.getNumberOfAccounts() <= 0) {
         std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cin.ignore(1000, '\n');
         std::cout << "Create new account and enter name of it: ";
         std::getline(std::cin, name);
         timebank.createAccount(name);
     }
     timebank.printCurrentAccount();
-    std::cout << "Enter command (update time-1, add time-2, get time-3, print all accs-4\n"
-        << "create new acc-5, rename cur acc-6, go to another acc-7, delete acc-8, stop-9): ";
+    std::cout << "Enter command (update time-1, add time-2, get time-3, start timer-4\n"
+        << " print all accs-5, create new acc-6, rename cur acc-7, go to another acc-8, delete acc-9, stop-10): ";
     std::cin >> command;
 
     if (std::cin.fail()) {
         std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cin.ignore(1000, '\n');
         std::cout << "Error: you need to enter number of command, not a word\n";
         return;
     }
@@ -134,7 +137,7 @@ void createAccount_handler(Timebank& timebank) {
 void renameCurrentAccount_handler(Timebank& timebank) {
     std::string name;
     std::cin.clear();
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin.ignore(1000, '\n');
     std::cout << "Enter new name of current acc: ";
     std::getline(std::cin, name);
     timebank.renameCurrentAccount(name);

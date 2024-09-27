@@ -1,16 +1,22 @@
 #ifndef TIMER_H
 #define TIMER_H
+#include <iostream>
+#include <windows.h>
 #include "UsefullStuff.h"
 
 class Timer
 {
 private:
-	Time wastingTime;
+	Time timeLeft;
+	void printTimer();
 
 public:
 	Timer();
 
-	void enterTime(int hours, int minutes, int seconds);
+	int getHours();
+	int getMinutes();
+	int getSeconds();
+
 	void addHours(int hours);
 	void addMinutes(int minutes);
 	void addSeconds(int seconds);

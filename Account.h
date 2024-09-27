@@ -7,7 +7,7 @@
 class Account
 {
 private:
-	Time TimeResourse;
+	Time time, wastingTime;
 	Timer* timer;
 	
 	std::string name;
@@ -26,7 +26,7 @@ public:
 	int getSeconds();
 
 	//To work with the time
-	void updateTimeResourse(int hours, int minutes, int secs);
+	void updateTime(int hours, int minutes, int secs);
 
 	void addHours(int hours);
 	void addMinutes(int minutes);

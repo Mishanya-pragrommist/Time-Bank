@@ -106,7 +106,7 @@ void Timebank::deleteAllAccounts() {
 }
 
 void Timebank::updateTime(int hours, int minutes, int seconds) {
-	currentAccount->updateTimeResourse(hours, minutes, seconds);
+	currentAccount->updateTime(hours, minutes, seconds);
 }
 void Timebank::renameCurrentAccount(std::string newname) {
 	if (newname == "\0") return;
@@ -146,7 +146,7 @@ void Timebank::substractSeconds(int seconds) {
 }
 
 void Timebank::startTimer() {
-
+	currentAccount->startTimer();
 }
 
 void Timebank::printCurrentAccount() {

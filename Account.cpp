@@ -4,19 +4,26 @@ Account::Account(std::string name, int accountID, int hours, int minutes, int se
     this->name = name;
     this->accountID = accountID;
 
-    TimeResourse.hours = hours;
-    TimeResourse.minutes = minutes;
-    TimeResourse.seconds = seconds;
+    time.hours = hours;
+    time.minutes = minutes;
+    time.seconds = seconds;
 
+    wastingTime.hours = 0;
+    wastingTime.minutes = 0;
+    wastingTime.seconds = 0;
     timer = new Timer();
 }
 Account::Account(std::string name) {
     this->name = name;
 
-    TimeResourse.hours = 0;
-    TimeResourse.minutes = 0;
-    TimeResourse.seconds = 0;
+    time.hours = 0;
+    time.minutes = 0;
+    time.seconds = 0;
     
+    wastingTime.hours = 0;
+    wastingTime.minutes = 0;
+    wastingTime.seconds = 0;
+
     timer = new Timer();
 }
 
@@ -27,51 +34,51 @@ void Account::setID(int numberOfAccount) { this->accountID = numberOfAccount; }
 std::string Account::getName() { return name; }
 int Account::getAccountID() { return accountID; }
 
-int Account::getHours() { return TimeResourse.hours; }
-int Account::getMinutes() { return TimeResourse.minutes; }
-int Account::getSeconds() { return TimeResourse.seconds; }
+int Account::getHours() { return time.hours; }
+int Account::getMinutes() { return time.minutes; }
+int Account::getSeconds() { return time.seconds; }
 
-void Account::updateTimeResourse(int hours, int minutes, int secs) {
-    TimeResourse.hours = hours;
-    TimeResourse.minutes = minutes;
-    TimeResourse.seconds = secs;
+void Account::updateTime(int hours, int minutes, int secs) {
+    time.hours = hours;
+    time.minutes = minutes;
+    time.seconds = secs;
 }
 void Account::addHours(int hours) {
-    TimeResourse.hours += hours;
+    time.hours += hours;
 }
 void Account::addMinutes(int minutes) {
-    TimeResourse.minutes += minutes;
-    if (TimeResourse.minutes >= 60) {
-        TimeResourse.hours++;
-        TimeResourse.minutes -= 60;
+    time.minutes += minutes;
+    if (time.minutes >= 60) {
+        time.hours++;
+        time.minutes -= 60;
     }
 }
 void Account::addSeconds(int seconds) {
-    TimeResourse.seconds += seconds;
-    if (TimeResourse.seconds >= 60) {
-        TimeResourse.minutes++;
-        TimeResourse.seconds -= 60;
-        if (TimeResourse.minutes >= 60) {
-            TimeResourse.hours++;
-            TimeResourse.minutes -= 60;
+    time.seconds += seconds;
+    if (time.seconds >= 60) {
+        time.minutes++;
+        time.seconds -= 60;
+        if (time.minutes >= 60) {
+            time.hours++;
+            time.minutes -= 60;
         }
     }
 }
 
 void Account::substractHours(int hours) {
-    if (hours > TimeResourse.hours) {
+    if (hours > time.hours) {
         std::cout << "Error: I dont have enough hours for you\n";
         return;
     }
-    TimeResourse.hours -= hours;
+    time.hours -= hours;
     timer->addHours(hours);
 }
 void Account::substractMinutes(int minutes) {
-    if (minutes > TimeResourse.minutes) {
-        if (TimeResourse.hours > 0) {
-            minutes -= TimeResourse.minutes; //Adding minutes from 1 hour
-            TimeResourse.minutes = 60 - minutes;
-            TimeResourse.hours--;
+    if (minutes > time.minutes) {
+        if (time.hours > 0) {
+            minutes -= time.minutes; //Adding minutes from 1 hour
+            time.minutes = 60 - minutes;
+            time.hours--;
             return;
         }
         else {
@@ -79,44 +86,40 @@ void Account::substractMinutes(int minutes) {
             return;
         }
     }
-    TimeResourse.minutes -= minutes;
+    else { time.minutes -= minutes; }
     timer->addMinutes(minutes);
 }
 void Account::substractSeconds(int seconds) {
-    if (seconds > TimeResourse.seconds) {
-        seconds -= TimeResourse.seconds;
-        TimeResourse.seconds = 60 - seconds;
-        if (TimeResourse.minutes > 0) {
-            TimeResourse.minutes--;
+    if (seconds > time.seconds) {
+        seconds -= time.seconds;
+        time.seconds = 60 - seconds;
+        if (time.minutes > 0) {
+            time.minutes--;
         }
-        else if (TimeResourse.hours > 0) {
-            TimeResourse.hours--;
-            seconds -= TimeResourse.seconds;
+        else if (time.hours > 0) {
+            time.hours--;
+            seconds -= time.seconds;
         }
         else {
             std::cout << "Error: I dont have enough seconds for you\n";
+            return;
         }
     }
+    else { time.seconds -= seconds; }
     timer->addSeconds(seconds);
 }
 
 void Account::printDataAboutAccount() {
     std::cout << "---Account #" << accountID << " " << name << "---\n";
-    std::cout << "Current time resourses:\n";
-
-    if (TimeResourse.hours == 0) { std::cout << "00"; }
-    else { std::cout << TimeResourse.hours; }
-    std::cout << ":";
-
-    if (TimeResourse.minutes == 0) { std::cout << "00"; }
-    else { std::cout << TimeResourse.minutes; }
-    std::cout << ":";
-
-    if (TimeResourse.seconds == 0) { std::cout << "00"; }
-    else { std::cout << TimeResourse.seconds; }
-    std::cout << "\n";
+    std::cout << "Current time resourses: " 
+        << time.hours << ":" 
+        << time.minutes << ":" 
+        << time.seconds << "\n";
+    
+    std::cout << "Wasting time: "
+        << timer->getHours() << ":" 
+        << timer->getMinutes() << ":" 
+        << timer->getSeconds() << "\n";
 }
 
-void Account::startTimer() {
-
-}
+void Account::startTimer() { timer->start(); }
