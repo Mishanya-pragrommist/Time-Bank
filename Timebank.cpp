@@ -1,21 +1,24 @@
 #include "Timebank.h"
 
-Timebank::Timebank() {
-	readFromFile();
-}
+Timebank::Timebank() { readFromFile(); }
 
 Timebank::~Timebank() { 
 	writeToFile();
 	deleteAllAccounts();
 }
 
+//For saving/reading data
 void Timebank::writeToFile() {
 	std::ofstream fout(savingFilePath);
 	if (!fout.is_open()) { std::cout << "Error: fout wasnt open\n"; return; }
-	
+
 	nlohmann::json jwrite;
+
+	//Firstly we need to know how much of accounts there are
 	jwrite["Timebank"] = { { "numberOfAccounts", numberOfAccounts} };
+
 	for (int i = 0; i < Accounts.size(); i++) {
+		//Same as in readFromFile() func
 		std::string objectName = "Account #" + std::to_string(i + 1);
 		jwrite[objectName] = {
 			{"name", Accounts[i]->getName()},
@@ -37,9 +40,11 @@ void Timebank::readFromFile() {
 	fin >> jread;
 
 	numberOfAccounts = jread["Timebank"]["numberOfAccounts"].get<int>();
-	if (numberOfAccounts > 0) {
-		for (int i = 0; i < numberOfAccounts; i++) {
-			std::string objectName = "Account #" + std::to_string(i + 1);
+	if (numberOfAccounts > 0) { //Reading data for each account
+		for (int i = 1; i <= numberOfAccounts; i++) {
+			
+			//Each object in .json file has a name "Acocunt #" + its number in list
+			std::string objectName = "Account #" + std::to_string(i);
 			Accounts.push_back(new Account(jread[objectName]["name"].get<std::string>(),
 				jread[objectName]["accountID"].get<int>(),
 				jread[objectName]["hours"].get<int>(),
@@ -53,12 +58,11 @@ void Timebank::readFromFile() {
 
 int Timebank::getNumberOfAccounts() { return numberOfAccounts; }
 
-//To manage accounts (create, delete, change)
 void Timebank::numerateAccounts(int start) {
-	for (int i = start; i < Accounts.size(); i++) {
-		Accounts[i]->setID(i + 1);
-	}
+	for (int i = start; i < Accounts.size(); i++) { Accounts[i]->setID(i + 1); }
 }
+
+//To manage accounts (create, delete, change)
 void Timebank::createAccount(std::string name) {
 	numberOfAccounts++;
 	Accounts.push_back(new Account(name));
@@ -147,10 +151,6 @@ void Timebank::startTimer() {
 
 void Timebank::printCurrentAccount() {
 	currentAccount->printDataAboutAccount();
-}
-void Timebank::printOneAccount(int index) {
-	if (index < 0 || index > Accounts.size()) { return; }
-	Accounts[index]->printDataAboutAccount();
 }
 void Timebank::printAllAccounts() {
 	for (Account* item : Accounts) {

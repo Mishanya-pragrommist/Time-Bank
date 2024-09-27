@@ -7,7 +7,6 @@ void startWork_handler(Timebank& timebank, int& command);
 void updateTime_handler(Timebank& timebank);
 void addTime_handler(Timebank& timebank);
 void getTime_handler(Timebank& timebank);
-void printOneAccount_handler(Timebank& timebank);
 void printAllAccounts_handler(Timebank& timebank);
 void createAccount_handler(Timebank& timebank);
 void renameCurrentAccount_handler(Timebank& timebank);
@@ -17,12 +16,9 @@ void changeAccount_handler(Timebank& timebank);
 int main()
 {
     int command = 0;
-    std::string name;
+    std::string name; //Name of the new account (used when user wants to create new one)
     Timebank timebank; //It contains all of the accounts where you can handle your time
-
-    /*std::cout << "Creating 1st account: enter the name of acc: "; std::getline(std::cin, name);
-    timebank.createAccount(name);*/
-
+    
     //Main cycle of programm
     while (command != STOP) {
         startWork_handler(timebank, command);
@@ -37,9 +33,6 @@ int main()
             break;
         case GETTIME:
             getTime_handler(timebank);
-            break;
-        case PRINT:
-            printOneAccount_handler(timebank);
             break;
         case PRINTALLACCOUNTS:
             printAllAccounts_handler(timebank);
@@ -79,8 +72,8 @@ void startWork_handler(Timebank& timebank, int& command) {
         timebank.createAccount(name);
     }
     timebank.printCurrentAccount();
-    std::cout << "Enter command (update time-1, add time-2, get time-3, print one acc-4, print all accs-5\n"
-        << "create new acc-6, rename cur acc-7, go to another acc-8, delete acc-9, stop-10): ";
+    std::cout << "Enter command (update time-1, add time-2, get time-3, print all accs-4\n"
+        << "create new acc-5, rename cur acc-6, go to another acc-7, delete acc-8, stop-9): ";
     std::cin >> command;
 
     if (std::cin.fail()) {
@@ -124,20 +117,6 @@ void getTime_handler(Timebank& timebank) {
     else if (what == 'm') { timebank.substractMinutes(timeEntered); }
     else if (what == 's') { timebank.substractSeconds(timeEntered); }
     else { std::cout << "Error: its no h/m/s\n"; }
-}
-void printOneAccount_handler(Timebank& timebank) {
-    int number;
-    std::cout << "Enter # of acc you want to print (<=0 to cancell): ";
-    std::cin >> number;
-    if (number <= 0) {
-        std::cout << "Okey, you cancelled printing all accs";
-        return;
-    }
-    if (number > timebank.getNumberOfAccounts()) {
-        std::cout << "Error: there is no account with this number\n";
-        return;
-    }
-    timebank.printOneAccount(number - 1);
 }
 void printAllAccounts_handler(Timebank& timebank) {
     std::cout << "\nData about all accounts:\n";

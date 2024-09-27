@@ -10,13 +10,12 @@ enum Commands //Temporary used thing. I guess its won't be usefull in GUI
 	UPDATE = 1,
 	ADD, //= 2
 	GETTIME, // 3
-	PRINT, // 4
-	PRINTALLACCOUNTS, // 5
-	CREATEACCOUNT, // 6
-	RENAMECURRENTACC, //7
-	GOTO, //8
-	DELETE, // 9
-	STOP // 10
+	PRINTALLACCOUNTS, // 4
+	CREATEACCOUNT, // 5
+	RENAMECURRENTACC, //6
+	GOTO, //7
+	DELETE, // 8
+	STOP // 9
 };
 
 #endif

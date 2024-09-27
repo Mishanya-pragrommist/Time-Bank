@@ -41,9 +41,8 @@ public:
 
 	void deleteAccount(int index);
 	void deleteAllAccounts();
-
-	void printOneAccount(int i); //Print functions will be either changed or deleted
-	void printCurrentAccount();
+	
+	void printCurrentAccount(); //Print functions will be either changed or deleted
 	void printAllAccounts();
 
 	//To work with the time exactly
