@@ -1,7 +1,6 @@
 #include "Timebank.h"
 
 Timebank::Timebank() {
-	currentAccount = nullptr;
 	readFromFile();
 }
 
@@ -11,13 +10,10 @@ Timebank::~Timebank() {
 }
 
 void Timebank::writeToFile() {
-	std::ofstream fout;
-	fout.open(savingFilePath);
-	if (!fout.is_open()) {
-		std::cout << "Error: fout wasnt open\n"; 
-		return;
-	}
-
+	std::ofstream fout(savingFilePath);
+	if (!fout.is_open()) { std::cout << "Error: fout wasnt open\n"; return; }
+	
+	nlohmann::json jwrite;
 	jwrite["Timebank"] = { { "numberOfAccounts", numberOfAccounts} };
 	for (int i = 0; i < Accounts.size(); i++) {
 		std::string objectName = "Account #" + std::to_string(i + 1);
@@ -34,9 +30,7 @@ void Timebank::writeToFile() {
 	fout.close();
 }
 void Timebank::readFromFile() {
-	std::ifstream fin;
-	
-	fin.open(savingFilePath);
+	std::ifstream fin(savingFilePath);
 	if (!fin.is_open()) { std::cout << "Error: fin wasnt opened\n"; return; }
 
 	nlohmann::json jread;
@@ -72,7 +66,7 @@ void Timebank::createAccount(std::string name) {
 	numerateAccounts(numberOfAccounts - 1);
 
 	if (numberOfAccounts <= 1) { 
-		currentAccount = Accounts[0]; //If we create first account
+		currentAccount = Accounts[0]; //When we create first account
 	}
 }
 void Timebank::changeAccount(int index) {
@@ -84,7 +78,7 @@ void Timebank::changeAccount(int index) {
 }
 
 void Timebank::deleteAccount(int index) {
-	if (index < 0 || index > Accounts.size()) { return; }
+	if (index < 0 || index >= Accounts.size()) { return; }
 
 	if (numberOfAccounts > 1) {
 		if (currentAccount == Accounts[index]) {
@@ -105,7 +99,6 @@ void Timebank::deleteAllAccounts() {
 	for (Account* item : Accounts) { delete item; }
 	Accounts.clear();
 	numberOfAccounts = 0;
-	jwrite.clear();
 }
 
 void Timebank::updateTime(int hours, int minutes, int seconds) {
@@ -116,7 +109,7 @@ void Timebank::renameCurrentAccount(std::string newname) {
 	currentAccount->setName(newname);
 }
 void Timebank::renameAccount(int index, std::string newname) {
-	if (index < 0 || index > Accounts.size()) { return; }
+	if (index < 0 || index > Accounts.size() || newname == "\0") { return; }
 	Accounts[index]->setName(newname);
 }
 

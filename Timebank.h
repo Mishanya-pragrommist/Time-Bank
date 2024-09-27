@@ -16,7 +16,7 @@ private:
 	
 	//For saving and reading data
 	std::string savingFilePath = "save/savings.json";
-	nlohmann::json jwrite, jread;
+	//nlohmann::json jfile;
 
 	int numberOfAccounts;
 	void numerateAccounts(int start);
@@ -29,8 +29,10 @@ public:
 	~Timebank();
 
 	int getNumberOfAccounts();
+	//All methods that takes "index" should be smaller than real number of account you are looking for
+	//For example, to find account #3 you need to enter index 2
+
 	//To manage accounts
-	//Al methods that takes "index" should be smaller than real number of account you are looking for
 	void createAccount(std::string name);
 	void changeAccount(int index);
 	

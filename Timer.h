@@ -14,6 +14,8 @@ public:
 	void addHours(int hours);
 	void addMinutes(int minutes);
 	void addSeconds(int seconds);
+
+	void start();
 };
 
 #endif
