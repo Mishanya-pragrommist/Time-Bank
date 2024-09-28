@@ -66,8 +66,12 @@ void Timebank::writeToFile() {
 	fout.close();
 }
 
-//The only getter in Timebank class
+//Getters
 int Timebank::getNumberOfAccounts() { return numberOfAccounts; }
+std::string Timebank::getAccountName(int index) { 
+	if (index < 0 || index >= Accounts.size()) return nullptr;
+	return Accounts[index]->getName(); 
+}
 
 void Timebank::numerateAccounts(int start) {
 	for (int i = start; i < Accounts.size(); i++) { Accounts[i]->setID(i + 1); }
@@ -103,7 +107,7 @@ void Timebank::deleteAccount(int index) {
 	else { currentAccount = nullptr; } //If there is only 1 acc
 
 	delete Accounts[index];
-	Accounts.erase(Accounts.begin() + index);
+	Accounts.erase(Accounts.begin() + index); //To delete pointer in array
 	numberOfAccounts--;
 	numerateAccounts(index);
 }
@@ -153,9 +157,8 @@ void Timebank::substractSeconds(int seconds) {
 	currentAccount->substractSeconds(seconds);
 }
 
-void Timebank::printCurrentAccount() {
-	currentAccount->printAccountData();
-}
+void Timebank::printCurrentAccount() { currentAccount->printAccountData(); }
+
 void Timebank::printAllAccounts() {
 	for (Account* item : Accounts) {
 		item->printAccountData();
@@ -163,8 +166,6 @@ void Timebank::printAllAccounts() {
 	}
 }
 
-void Timebank::returnTimeToAccount() {
-	currentAccount->returnTimeToAccount();
-}
+void Timebank::returnTimeToAccount() { currentAccount->returnTimeToAccount(); }
 
 void Timebank::startTimer() { currentAccount->startTimer(); }

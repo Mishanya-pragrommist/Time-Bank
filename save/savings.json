@@ -1,13 +1,13 @@
 {
     "Account #1": {
         "accountID": 1,
-        "hours": 21,
-        "minutes": 32,
-        "name": "for memes",
-        "seconds": 24,
+        "hours": 1,
+        "minutes": 19,
+        "name": "for nothing",
+        "seconds": 50,
         "wastingHours": 0,
         "wastingMinutes": 0,
-        "wastingSeconds": 0
+        "wastingSeconds": 40
     },
     "Timebank": {
         "numberOfAccounts": 1

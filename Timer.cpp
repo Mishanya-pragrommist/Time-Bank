@@ -1,8 +1,6 @@
 #include "Timer.h"
 
-Timer::Timer() {
-	timeLeft = { 0, 0, 0 };
-}
+Timer::Timer() { timeLeft = { 0, 0, 0 }; }
 
 void Timer::setTimeLeft(Time timeLeft) {
 	this->timeLeft = { timeLeft.hours, timeLeft.minutes, timeLeft.seconds };
@@ -35,7 +33,7 @@ void Timer::start() {
 	std::cout << "Time is over\n";
 }
 
-void Timer::deleteTime() { timeLeft = { 0, 0, 0 }; }
+void Timer::resetTime() { timeLeft = { 0, 0, 0 }; }
 
 void Timer::printTimer() {
 	std::cout << "Time: " 

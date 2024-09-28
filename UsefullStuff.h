@@ -5,8 +5,7 @@
 
 struct Time { int hours, minutes, seconds; };
 
-enum Commands //Temporary used thing. I guess its won't be usefull in GUI
-			  //But who knows...
+enum Commands //Temporary used thing. I guess its won't be usefull in GUI. But who knows...
 {
 	UPDATE = 1,
 	ADD, //= 2

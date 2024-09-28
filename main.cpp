@@ -1,7 +1,7 @@
-﻿#include <iostream>
+﻿#include <iostream> //In GUI it will be useless, so I'll delete it in future
 #include <string>
 #include "Timebank.h"
-#include "UsefullStuff.h"
+#include "UsefullStuff.h" //It here is only for enum Commands
 
 void startWork_handler(Timebank& timebank, int& command);
 void updateTime_handler(Timebank& timebank);
@@ -109,7 +109,7 @@ void addTime_handler(Timebank& timebank) {
     if (what == 'h') { timebank.addHours(timeEntered); }
     else if (what == 'm') { timebank.addMinutes(timeEntered); }
     else if (what == 's') { timebank.addSeconds(timeEntered); }
-    else { std::cout << "Error: its no h/m/s\n"; }
+    else { std::cout << "Error: it's not h/m/s\n"; }
 }
 void getTime_handler(Timebank& timebank) {
     int timeEntered;
@@ -160,8 +160,9 @@ void deleteAccount_handler(Timebank& timebank) {
         std::cout << "You cancelled deleting\n";
         return;
     }
-    timebank.deleteAccount(number - 1); //Number of acc is bigger than its place in vector
-    std::cout << "You deleted account #" << number << std::endl;
+    std::cout << "You deleted account #" << number 
+        << " " << timebank.getAccountName(number - 1) << std::endl;
+    timebank.deleteAccount(number - 1); //Index of acc is smaller than its real number
 }
 void changeAccount_handler(Timebank& timebank) {
     int number;

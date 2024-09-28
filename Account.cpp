@@ -132,7 +132,7 @@ void Account::returnTimeToAccount() {
     
     wastingTime = { 0, 0, 0 };
 
-    timer.deleteTime(); //It will be useful when I add some way to stop timer while its working
+    timer.resetTime(); //It will be useful when I add some way to stop timer while its working
                         //Rn this func is useless since timer will 
                         //waste all time anyway due to no interrupting
 }

@@ -1,8 +1,8 @@
 #ifndef TIMEBANK_H
 #define TIMEBANK_H
 #include <iostream> //Delete this and all std::cout in future
-#include <vector>
 #include <fstream>
+#include <vector>
 #include "nlohmann/json.hpp"
 #include "Account.h"
 #include "UsefullStuff.h"
@@ -26,6 +26,7 @@ public:
 	~Timebank();
 
 	int getNumberOfAccounts();
+	std::string getAccountName(int index);
 	//All methods that takes "index" should be smaller in 1 than real number of acc u r looking for
 	//For example, to find acc #3 u need to enter index 2
 
