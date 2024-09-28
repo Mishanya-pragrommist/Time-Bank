@@ -69,7 +69,7 @@ void Timebank::writeToFile() {
 //Getters
 int Timebank::getNumberOfAccounts() { return numberOfAccounts; }
 std::string Timebank::getAccountName(int index) { 
-	if (index < 0 || index >= Accounts.size()) return nullptr;
+	if (index < 0 || index >= Accounts.size()) return "\0";
 	return Accounts[index]->getName(); 
 }
 
