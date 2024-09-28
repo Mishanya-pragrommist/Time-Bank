@@ -27,42 +27,30 @@ int main()
         //This place will be changed according to GUI (and maybe I'll do it without enums)
         switch (command) {
         case UPDATE:
-            updateTime_handler(timebank);
-            break;
+            updateTime_handler(timebank); break;
         case ADD:
-            addTime_handler(timebank);
-            break;
+            addTime_handler(timebank); break;
         case GETTIME:
-            getTime_handler(timebank);
-            break;
+            getTime_handler(timebank); break;
         case RETURNTIME:
-            returnTime_handler(timebank);
-            break;
+            returnTime_handler(timebank); break;
         case PRINTALLACCOUNTS:
-            printAllAccounts_handler(timebank);
-            break;
+            printAllAccounts_handler(timebank); break;
         case STARTTIMER:
-            timebank.startTimer();
-            break;
+            timebank.startTimer(); break;
         case CREATEACCOUNT:
-            createAccount_handler(timebank);
-            break;
+            createAccount_handler(timebank); break;
         case RENAMECURRENTACC:
-            renameCurrentAccount_handler(timebank);
-            break;
+            renameCurrentAccount_handler(timebank); break;
         case DELETEACC:
-            deleteAccount_handler(timebank);
-            break;
+            deleteAccount_handler(timebank); break;
         case GOTO:
-            changeAccount_handler(timebank);
-            break;
+            changeAccount_handler(timebank); break;
         case STOP:
-            std::cout << "Programm stopped working succesfully\n";
-            break;
+            std::cout << "Programm stopped working succesfully\n"; break;
 
         default:
-            std::cout << "Error: I dont know this command\n";
-            break;
+            std::cout << "Error: I dont know this command\n"; break;
         }
     }
 
