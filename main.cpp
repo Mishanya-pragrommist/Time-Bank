@@ -7,6 +7,7 @@ void startWork_handler(Timebank& timebank, int& command);
 void updateTime_handler(Timebank& timebank);
 void addTime_handler(Timebank& timebank);
 void getTime_handler(Timebank& timebank);
+void returnTime_handler(Timebank& timebank);
 void printAllAccounts_handler(Timebank& timebank);
 void createAccount_handler(Timebank& timebank);
 void renameCurrentAccount_handler(Timebank& timebank);
@@ -33,6 +34,9 @@ int main()
             break;
         case GETTIME:
             getTime_handler(timebank);
+            break;
+        case RETURNTIME:
+            returnTime_handler(timebank);
             break;
         case PRINTALLACCOUNTS:
             printAllAccounts_handler(timebank);
@@ -75,8 +79,8 @@ void startWork_handler(Timebank& timebank, int& command) {
         timebank.createAccount(name);
     }
     timebank.printCurrentAccount();
-    std::cout << "Enter command (update time-1, add time-2, get time-3, start timer-4\n"
-        << " print all accs-5, create new acc-6, rename cur acc-7, go to another acc-8, delete acc-9, stop-10): ";
+    std::cout << "Enter command (update time-1, add time-2, get time-3, return time-4, start timer-5\n"
+        << " print all accs-6, create new acc-7, rename cur acc-8, go to another acc-9, delete acc-10, stop-11): ";
     std::cin >> command;
 
     if (std::cin.fail()) {
@@ -121,6 +125,11 @@ void getTime_handler(Timebank& timebank) {
     else if (what == 's') { timebank.substractSeconds(timeEntered); }
     else { std::cout << "Error: its no h/m/s\n"; }
 }
+void returnTime_handler(Timebank& timebank) {
+    timebank.returnTimeToAccount();
+    std::cout << "You returned time back to current time=)\n";
+}
+
 void printAllAccounts_handler(Timebank& timebank) {
     std::cout << "\nData about all accounts:\n";
     timebank.printAllAccounts();

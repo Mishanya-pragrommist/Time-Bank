@@ -5,7 +5,6 @@
 #include <fstream>
 #include "nlohmann/json.hpp"
 #include "Account.h"
-#include "Timer.h"
 #include "UsefullStuff.h"
 
 class Timebank
@@ -16,21 +15,19 @@ private:
 	
 	//For saving and reading data
 	std::string savingFilePath = "save/savings.json";
-	//nlohmann::json jfile;
+	void writeToFile();
+	void readFromFile();
 
 	int numberOfAccounts;
 	void numerateAccounts(int start);
-
-	//To save data in .json file and read from them
-	void writeToFile();
-	void readFromFile();
+		
 public:
 	Timebank();
 	~Timebank();
 
 	int getNumberOfAccounts();
-	//All methods that takes "index" should be smaller than real number of account you are looking for
-	//For example, to find account #3 you need to enter index 2
+	//All methods that takes "index" should be smaller in 1 than real number of acc u r looking for
+	//For example, to find acc #3 u need to enter index 2
 
 	//To manage accounts
 	void createAccount(std::string name);
@@ -47,14 +44,17 @@ public:
 
 	//To work with the time exactly
 	void updateTime(int hours, int minutes, int seconds); //To re-enter time 
-
-	void addHours(int hours); //Adding time
+	
+	void addHours(int hours); //To add time
 	void addMinutes(int minutes);
 	void addSeconds(int seconds);
 
-	void substractHours(int hours); //Substracting time
+	void substractHours(int hours); //To substract time
 	void substractMinutes(int minutes);
 	void substractSeconds(int seconds);
+
+	//If user doesnt want to waste time
+	void returnTimeToAccount();
 
 	void startTimer();
 };

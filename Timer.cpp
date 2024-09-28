@@ -1,36 +1,13 @@
 #include "Timer.h"
 
 Timer::Timer() {
-	timeLeft.hours = 0;
-	timeLeft.minutes = 0;
-	timeLeft.seconds = 0;
+	timeLeft = { 0, 0, 0 };
 }
 
-int Timer::getHours() { return timeLeft.hours; }
-int Timer::getMinutes() { return timeLeft.minutes; }
-int Timer::getSeconds() { return timeLeft.seconds; }
-
-void Timer::addHours(int hours) { 
-	timeLeft.hours += hours;
+void Timer::setTimeLeft(Time timeLeft) {
+	this->timeLeft = { timeLeft.hours, timeLeft.minutes, timeLeft.seconds };
 }
-void Timer::addMinutes(int minutes) { 
-	timeLeft.minutes += minutes;
-	if (timeLeft.minutes >= 60) {
-		timeLeft.hours++;
-		timeLeft.minutes -= 60;
-	}
-}
-void Timer::addSeconds(int seconds) { 
-	timeLeft.seconds += seconds;
-	if (timeLeft.seconds >= 60) {
-		timeLeft.minutes++;
-		timeLeft.seconds -= 60;
-		if (timeLeft.minutes >= 60) {
-			timeLeft.hours++;
-			timeLeft.minutes -= 60;
-		}
-	}
-}
+Time Timer::getTimeLeft() { return timeLeft; }
 
 void Timer::start() {
 	while (timeLeft.hours > 0 || timeLeft.minutes > 0 || timeLeft.seconds > 0) {
@@ -58,6 +35,11 @@ void Timer::start() {
 	std::cout << "Time is over\n";
 }
 
+void Timer::deleteTime() { timeLeft = { 0, 0, 0 }; }
+
 void Timer::printTimer() {
-	std::cout << "Time: " << timeLeft.hours << ":" << timeLeft.minutes << ":" << timeLeft.seconds << "\n";
+	std::cout << "Time: " 
+		<< timeLeft.hours << ":" 
+		<< timeLeft.minutes << ":" 
+		<< timeLeft.seconds << "\n";
 }

@@ -8,6 +8,36 @@ Timebank::~Timebank() {
 }
 
 //For saving/reading data
+void Timebank::readFromFile() {
+	std::ifstream fin(savingFilePath);
+	if (!fin.is_open()) { std::cout << "Error: fin wasn't opened\n"; return; }
+
+	nlohmann::json jread;
+	fin >> jread;
+
+	numberOfAccounts = jread["Timebank"]["numberOfAccounts"].get<int>();
+	if (numberOfAccounts > 0) { //Reading data for each account
+		for (int i = 1; i <= numberOfAccounts; i++) {
+			//Each object in .json file has a name "Acocunt #" + its number in list
+			std::string objectName = "Account #" + std::to_string(i);
+
+			Time tempTime, tempWastingTime;
+			tempTime.hours = jread[objectName]["hours"].get<int>();
+			tempTime.minutes = jread[objectName]["minutes"].get<int>();
+			tempTime.seconds = jread[objectName]["seconds"].get<int>();
+
+			tempWastingTime.hours = jread[objectName]["wastingHours"].get<int>();
+			tempWastingTime.minutes = jread[objectName]["wastingMinutes"].get<int>();
+			tempWastingTime.seconds = jread[objectName]["wastingSeconds"].get<int>();
+
+			std::string accName = jread[objectName]["name"].get<std::string>();
+			int accID = jread[objectName]["accountID"].get<int>();
+			Accounts.push_back(new Account(accName, accID, tempTime, tempWastingTime));
+		}
+		currentAccount = Accounts[0];
+	}
+	fin.close();
+}
 void Timebank::writeToFile() {
 	std::ofstream fout(savingFilePath);
 	if (!fout.is_open()) { std::cout << "Error: fout wasnt open\n"; return; }
@@ -25,37 +55,18 @@ void Timebank::writeToFile() {
 			{"accountID", Accounts[i]->getAccountID()},
 			{"hours", Accounts[i]->getHours()},
 			{"minutes", Accounts[i]->getMinutes()},
-			{"seconds", Accounts[i]->getSeconds()}
+			{"seconds", Accounts[i]->getSeconds()},
+			{"wastingHours", Accounts[i]->getWastingHours()},
+			{"wastingMinutes", Accounts[i]->getWastingMinutes()},
+			{"wastingSeconds", Accounts[i]->getWastinghSeconds()}
 		};
 	}
 	
 	fout << jwrite.dump(4);
 	fout.close();
 }
-void Timebank::readFromFile() {
-	std::ifstream fin(savingFilePath);
-	if (!fin.is_open()) { std::cout << "Error: fin wasnt opened\n"; return; }
 
-	nlohmann::json jread;
-	fin >> jread;
-
-	numberOfAccounts = jread["Timebank"]["numberOfAccounts"].get<int>();
-	if (numberOfAccounts > 0) { //Reading data for each account
-		for (int i = 1; i <= numberOfAccounts; i++) {
-			
-			//Each object in .json file has a name "Acocunt #" + its number in list
-			std::string objectName = "Account #" + std::to_string(i);
-			Accounts.push_back(new Account(jread[objectName]["name"].get<std::string>(),
-				jread[objectName]["accountID"].get<int>(),
-				jread[objectName]["hours"].get<int>(),
-				jread[objectName]["minutes"].get<int>(),
-				jread[objectName]["seconds"].get<int>()));
-		}
-		currentAccount = Accounts[0];
-	}
-	fin.close();
-}
-
+//The only getter in Timebank class
 int Timebank::getNumberOfAccounts() { return numberOfAccounts; }
 
 void Timebank::numerateAccounts(int start) {
@@ -64,11 +75,8 @@ void Timebank::numerateAccounts(int start) {
 
 //To manage accounts (create, delete, change)
 void Timebank::createAccount(std::string name) {
-	numberOfAccounts++;
-	Accounts.push_back(new Account(name));
-
-	numerateAccounts(numberOfAccounts - 1);
-
+	Accounts.push_back(new Account(name, ++numberOfAccounts));
+	
 	if (numberOfAccounts <= 1) { 
 		currentAccount = Accounts[0]; //When we create first account
 	}
@@ -119,42 +127,44 @@ void Timebank::renameAccount(int index, std::string newname) {
 
 //To add time
 void Timebank::addHours(int hours) {
-	if (hours == 0) { return; }
+	if (hours <= 0) { return; }
 	currentAccount->addHours(hours);
 }
 void Timebank::addMinutes(int minutes) {
-	if (minutes == 0) { return; }
+	if (minutes <= 0) { return; }
 	currentAccount->addMinutes(minutes);
 }
 void Timebank::addSeconds(int seconds) {
-	if (seconds == 0) { return; }
+	if (seconds <= 0) { return; }
 	currentAccount->addSeconds(seconds);
 }
 
 //To substract time
 void Timebank::substractHours(int hours) {
-	if (hours == 0) { return; }
+	if (hours <= 0) { return; }
 	currentAccount->substractHours(hours);
 }
 void Timebank::substractMinutes(int minutes) {
-	if (minutes == 0) { return; }
+	if (minutes <= 0) { return; }
 	currentAccount->substractMinutes(minutes);
 }
 void Timebank::substractSeconds(int seconds) {
-	if (seconds == 0) { return; }
+	if (seconds <= 0) { return; }
 	currentAccount->substractSeconds(seconds);
 }
 
-void Timebank::startTimer() {
-	currentAccount->startTimer();
-}
-
 void Timebank::printCurrentAccount() {
-	currentAccount->printDataAboutAccount();
+	currentAccount->printAccountData();
 }
 void Timebank::printAllAccounts() {
 	for (Account* item : Accounts) {
-		item->printDataAboutAccount();
+		item->printAccountData();
 		std::cout << std::endl;
 	}
 }
+
+void Timebank::returnTimeToAccount() {
+	currentAccount->returnTimeToAccount();
+}
+
+void Timebank::startTimer() { currentAccount->startTimer(); }

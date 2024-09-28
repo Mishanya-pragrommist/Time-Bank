@@ -1,35 +1,19 @@
 #include "Account.h"
 
-Account::Account(std::string name, int accountID, int hours, int minutes, int seconds) {
+Account::Account(std::string name, int accountID, Time time, Time wastingTime)
+    : name(name), accountID(accountID), time(time), wastingTime(wastingTime) {}
+
+Account::Account(std::string name, int accountID) {
     this->name = name;
     this->accountID = accountID;
 
-    time.hours = hours;
-    time.minutes = minutes;
-    time.seconds = seconds;
-
-    wastingTime.hours = 0;
-    wastingTime.minutes = 0;
-    wastingTime.seconds = 0;
-    timer = new Timer();
-}
-Account::Account(std::string name) {
-    this->name = name;
-
-    time.hours = 0;
-    time.minutes = 0;
-    time.seconds = 0;
-    
-    wastingTime.hours = 0;
-    wastingTime.minutes = 0;
-    wastingTime.seconds = 0;
-
-    timer = new Timer();
+    time = { 0, 0, 0 };
+    wastingTime = { 0, 0, 0 };
 }
 
 //Getters and setters
 void Account::setName(std::string name) { this->name = name; }
-void Account::setID(int numberOfAccount) { this->accountID = numberOfAccount; }
+void Account::setID(int accountID) { this->accountID = accountID; }
 
 std::string Account::getName() { return name; }
 int Account::getAccountID() { return accountID; }
@@ -38,10 +22,12 @@ int Account::getHours() { return time.hours; }
 int Account::getMinutes() { return time.minutes; }
 int Account::getSeconds() { return time.seconds; }
 
-void Account::updateTime(int hours, int minutes, int secs) {
-    time.hours = hours;
-    time.minutes = minutes;
-    time.seconds = secs;
+int Account::getWastingHours() { return wastingTime.hours; }
+int Account::getWastingMinutes() { return wastingTime.hours; }
+int Account::getWastinghSeconds() { return wastingTime.seconds; }
+
+void Account::updateTime(int hours, int minutes, int seconds) {
+    time = { hours, minutes, seconds };
 }
 void Account::addHours(int hours) {
     time.hours += hours;
@@ -71,9 +57,16 @@ void Account::substractHours(int hours) {
         return;
     }
     time.hours -= hours;
-    timer->addHours(hours);
+    wastingTime.hours += hours;
 }
 void Account::substractMinutes(int minutes) {
+    //Adding time we want to waste with the timer
+    wastingTime.minutes += minutes;
+    if (wastingTime.minutes >= 60) {
+        wastingTime.hours++;
+        wastingTime.minutes -= 60;
+    }
+
     if (minutes > time.minutes) {
         if (time.hours > 0) {
             minutes -= time.minutes; //Adding minutes from 1 hour
@@ -87,9 +80,18 @@ void Account::substractMinutes(int minutes) {
         }
     }
     else { time.minutes -= minutes; }
-    timer->addMinutes(minutes);
 }
 void Account::substractSeconds(int seconds) {
+    wastingTime.seconds += seconds;
+    if (wastingTime.seconds >= 60) {
+        wastingTime.minutes++;
+        wastingTime.seconds -= 60;
+        if (wastingTime.minutes >= 60) {
+            wastingTime.hours++;
+            wastingTime.minutes -= 60;
+        }
+    }
+
     if (seconds > time.seconds) {
         seconds -= time.seconds;
         time.seconds = 60 - seconds;
@@ -106,10 +108,11 @@ void Account::substractSeconds(int seconds) {
         }
     }
     else { time.seconds -= seconds; }
-    timer->addSeconds(seconds);
 }
 
-void Account::printDataAboutAccount() {
+void Account::printAccountData() { //Again, print funcs will be changed so they can show data in GUI.
+                                   //Maybe I'll even replace this func into a some class like Scene so
+                                   //it will draw numbers etc in window
     std::cout << "---Account #" << accountID << " " << name << "---\n";
     std::cout << "Current time resourses: " 
         << time.hours << ":" 
@@ -117,9 +120,25 @@ void Account::printDataAboutAccount() {
         << time.seconds << "\n";
     
     std::cout << "Wasting time: "
-        << timer->getHours() << ":" 
-        << timer->getMinutes() << ":" 
-        << timer->getSeconds() << "\n";
+        << wastingTime.hours << ":" 
+        << wastingTime.minutes << ":"
+        << wastingTime.seconds << "\n";
 }
 
-void Account::startTimer() { timer->start(); }
+void Account::returnTimeToAccount() {
+    addHours(wastingTime.hours);
+    addMinutes(wastingTime.minutes);
+    addSeconds(wastingTime.seconds);
+    
+    wastingTime = { 0, 0, 0 };
+
+    timer.deleteTime(); //It will be useful when I add some way to stop timer while its working
+                        //Rn this func is useless since timer will 
+                        //waste all time anyway due to no interrupting
+}
+
+void Account::startTimer() {
+    timer.setTimeLeft(wastingTime);
+    timer.start();
+    wastingTime = timer.getTimeLeft();
+}

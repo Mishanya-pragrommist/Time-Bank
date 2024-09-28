@@ -7,20 +7,14 @@
 class Timer
 {
 private:
-	Time timeLeft;
 	void printTimer();
-
+	Time timeLeft;
 public:
 	Timer();
-
-	int getHours();
-	int getMinutes();
-	int getSeconds();
-
-	void addHours(int hours);
-	void addMinutes(int minutes);
-	void addSeconds(int seconds);
-
+	
+	void setTimeLeft(Time timeLeft);
+	Time getTimeLeft();
+	void deleteTime();
 	void start();
 };
 

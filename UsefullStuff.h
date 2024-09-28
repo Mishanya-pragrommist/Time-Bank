@@ -6,17 +6,19 @@
 struct Time { int hours, minutes, seconds; };
 
 enum Commands //Temporary used thing. I guess its won't be usefull in GUI
+			  //But who knows...
 {
 	UPDATE = 1,
 	ADD, //= 2
 	GETTIME, // 3
-	STARTTIMER, //4
-	PRINTALLACCOUNTS, // 5
-	CREATEACCOUNT, // 6
-	RENAMECURRENTACC, // 7
-	GOTO, // 8
-	DELETEACC, // 9
-	STOP // 10
+	RETURNTIME, // 4
+	STARTTIMER, // 5
+	PRINTALLACCOUNTS, // 6
+	CREATEACCOUNT, // 7
+	RENAMECURRENTACC, // 8
+	GOTO, // 9
+	DELETEACC, // 10
+	STOP // 11
 };
 
 #endif
