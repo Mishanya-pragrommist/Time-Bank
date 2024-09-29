@@ -9,11 +9,13 @@ class Timer
 private:
 	void printTimer();
 	Time timeLeft;
+
 public:
 	Timer();
 	
 	void setTimeLeft(Time timeLeft);
 	Time getTimeLeft();
+
 	void resetTime();
 	void start();
 };

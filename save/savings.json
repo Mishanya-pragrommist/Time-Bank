@@ -1,15 +1,25 @@
 {
     "Account #1": {
         "accountID": 1,
-        "hours": 1,
-        "minutes": 2,
+        "hours": 23,
+        "minutes": 23,
         "name": "for nothing",
-        "seconds": 3,
+        "seconds": 10,
         "wastingHours": 0,
         "wastingMinutes": 0,
-        "wastingSeconds": 40
+        "wastingSeconds": 0
+    },
+    "Account #2": {
+        "accountID": 2,
+        "hours": 0,
+        "minutes": 39,
+        "name": "kirieshka",
+        "seconds": 50,
+        "wastingHours": 0,
+        "wastingMinutes": 0,
+        "wastingSeconds": 0
     },
     "Timebank": {
-        "numberOfAccounts": 1
+        "numberOfAccounts": 2
     }
 }

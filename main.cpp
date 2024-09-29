@@ -90,10 +90,8 @@ void addTime_handler(Timebank& timebank) {
     std::cout << "Add time (for ex: 30 m or 5 h)(<=0 to cancel): ";
     std::cin >> timeEntered >> what;
     if (timeEntered <= 0) {
-        std::cout << "You cancelled adding time\n";
-        return;
+        std::cout << "You cancelled adding time\n"; return;
     }
-
     if (what == 'h') { timebank.addHours(timeEntered); }
     else if (what == 'm') { timebank.addMinutes(timeEntered); }
     else if (what == 's') { timebank.addSeconds(timeEntered); }
@@ -105,8 +103,7 @@ void getTime_handler(Timebank& timebank) {
     std::cout << "How much time u want to get (for ex: 30 h, or 1 m)(<=0 to cancell): ";
     std::cin >> timeEntered >> what;
     if (timeEntered <= 0) {
-        std::cout << "Okey, you cancelled get time\n";
-        return;
+        std::cout << "Okey, you cancelled get time\n"; return;
     }
     if (what == 'h') { timebank.substractHours(timeEntered); }
     else if (what == 'm') { timebank.substractMinutes(timeEntered); }
@@ -117,17 +114,15 @@ void returnTime_handler(Timebank& timebank) {
     timebank.returnTimeToAccount();
     std::cout << "You returned time back to current time=)\n";
 }
-
 void printAllAccounts_handler(Timebank& timebank) {
     std::cout << "\nData about all accounts:\n";
     timebank.printAllAccounts();
-    std::cout << std::endl;
+    std::cout << "\n";
 }
 void createAccount_handler(Timebank& timebank) {
     std::string name;
     std::cin.ignore();
-    std::cout << "Enter the name of new account: ";
-    std::getline(std::cin, name);
+    std::cout << "Enter the name of new account: "; std::getline(std::cin, name);
     timebank.createAccount(name);
     std::cout << "You created a new account =)\n";
 }
@@ -135,8 +130,7 @@ void renameCurrentAccount_handler(Timebank& timebank) {
     std::string name;
     std::cin.clear();
     std::cin.ignore(1000, '\n');
-    std::cout << "Enter new name of current acc: ";
-    std::getline(std::cin, name);
+    std::cout << "Enter new name of current acc: "; std::getline(std::cin, name);
     timebank.renameCurrentAccount(name);
     std::cout << "You renamed acc successsfully)\n";
 }
@@ -144,7 +138,7 @@ void deleteAccount_handler(Timebank& timebank) {
     int number;
     std::cout << "Enter number of acc you want to delete (<=0 to cancell): ";
     std::cin >> number;
-    if (number <= 0) {
+    if (number <= 0 || number >= timebank.getNumberOfAccounts()) {
         std::cout << "You cancelled deleting\n";
         return;
     }
