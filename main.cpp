@@ -1,7 +1,6 @@
 ﻿#include <iostream> //In GUI it will be useless, so I'll delete it in future
 #include <string>
 #include "Timebank.h"
-#include "UsefullStuff.h" //It here is only for enum Commands
 
 void startWork_handler(Timebank& timebank, int& command);
 void updateTime_handler(Timebank& timebank);
