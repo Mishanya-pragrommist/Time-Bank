@@ -94,17 +94,14 @@ void Timebank::changeAccount(int index) {
 }
 
 void Timebank::deleteAccount(int index) {
-	if (index < 0 || index >= Accounts.size()) { return; }
+	if (index < 0 || index >= Accounts.size() || numberOfAccounts <= 1) { throw "You can't delete one left account\n"; }
 
-	if (numberOfAccounts > 1) {
-		if (currentAccount == Accounts[index]) {
-			int newIndex = index + (index == 0 ? 1 : -1); //When we delete acc we are in, we move into
-														  //acc on the left. If we are in 1st acc, 
-														  //we move into into acc on the right
-			currentAccount = Accounts[newIndex];
-		}
+	if (currentAccount == Accounts[index]) {
+		int newIndex = index + (index == 0 ? 1 : -1); //When we delete acc we are in, we move into
+													  //acc on the left. If we are in 1st acc, 
+													  //we move into into acc on the right
+		currentAccount = Accounts[newIndex];
 	}
-	else { currentAccount = nullptr; } //If there is only 1 acc
 
 	delete Accounts[index];
 	Accounts.erase(Accounts.begin() + index); //To delete pointer in vector

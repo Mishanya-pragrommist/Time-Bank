@@ -142,9 +142,13 @@ void deleteAccount_handler(Timebank& timebank) {
         std::cout << "You cancelled deleting\n";
         return;
     }
+    
+    if (timebank.deleteAccount(number - 1) == 1) { //Index of acc is smaller than its real number
+        std::cout << "You can't delete acc if there is only 1 acc left\n";
+        return;
+    }
     std::cout << "You deleted account #" << number 
         << " " << timebank.getAccountName(number - 1) << std::endl;
-    timebank.deleteAccount(number - 1); //Index of acc is smaller than its real number
 }
 void changeAccount_handler(Timebank& timebank) {
     int number;

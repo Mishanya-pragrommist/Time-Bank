@@ -57,7 +57,7 @@ void Account::substractSeconds(int seconds) {
 
 void Account::printAccountData() { //Again, print funcs will be changed so they can show data in GUI.
                                    //Maybe I'll even replace this func into a some class like Scene so
-                                   //it will draw numbers etc in window
+                                   //it will draw numbers, text etc in window
     std::cout << "---Account #" << accountID << " " << name << "---\n";
     std::cout << "Current time resourses: " 
         << accountTime.hours << ":"

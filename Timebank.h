@@ -38,6 +38,7 @@ public:
 	void renameCurrentAccount(std::string newname);
 	void renameAccount(int index, std::string newname);
 
+	//On success, it returns 0, if user tries to delete only acc in timebank, it returns 1
 	void deleteAccount(int index);
 	void deleteAllAccounts();
 	
