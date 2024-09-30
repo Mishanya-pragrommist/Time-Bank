@@ -5,7 +5,16 @@ Timer::Timer() { timeLeft = { 0, 0, 0 }; }
 void Timer::setTimeLeft(Time timeLeft) {
 	this->timeLeft = { timeLeft.hours, timeLeft.minutes, timeLeft.seconds };
 }
+
+int Timer::getHours() { return timeLeft.hours; }
+int Timer::getMinutes() { return timeLeft.minutes; }
+int Timer::getSeconds() { return timeLeft.seconds; }
+
 Time Timer::getTimeLeft() { return timeLeft; }
+
+void Timer::addHours(int hours) { timeLeft.hours += hours; }
+void Timer::addMinutes(int minutes) { TimeHelper::addTime(timeLeft, minutes * 60); }
+void Timer::addSeconds(int seconds) { TimeHelper::addTime(timeLeft, seconds); }
 
 void Timer::start() {
 	while (timeLeft.hours > 0 || timeLeft.minutes > 0 || timeLeft.seconds > 0) {

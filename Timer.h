@@ -15,6 +15,14 @@ public:
 	
 	void setTimeLeft(Time timeLeft);
 	Time getTimeLeft();
+	
+	void addHours(int hours);
+	void addMinutes(int minutes);
+	void addSeconds(int seconds);
+
+	int getHours();
+	int getMinutes();
+	int getSeconds();
 
 	void resetTime();
 	void start();

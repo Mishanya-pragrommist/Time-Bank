@@ -21,18 +21,18 @@ void Timebank::readFromFile() {
 			//Each object in .json file has a name "Acocunt #" + its number in list
 			std::string objectName = "Account #" + std::to_string(i);
 
-			Time tempTime, tempWastingTime;
+			Time tempTime, tempTimerTime;
 			tempTime.hours = jread[objectName]["hours"].get<int>();
 			tempTime.minutes = jread[objectName]["minutes"].get<int>();
 			tempTime.seconds = jread[objectName]["seconds"].get<int>();
 
-			tempWastingTime.hours = jread[objectName]["wastingHours"].get<int>();
-			tempWastingTime.minutes = jread[objectName]["wastingMinutes"].get<int>();
-			tempWastingTime.seconds = jread[objectName]["wastingSeconds"].get<int>();
+			tempTimerTime.hours = jread[objectName]["timerHours"].get<int>();
+			tempTimerTime.minutes = jread[objectName]["timerMinutes"].get<int>();
+			tempTimerTime.seconds = jread[objectName]["timerSeconds"].get<int>();
 
 			std::string accName = jread[objectName]["name"].get<std::string>();
 			int accID = jread[objectName]["accountID"].get<int>();
-			Accounts.push_back(new Account(accName, accID, tempTime, tempWastingTime));
+			Accounts.push_back(new Account(accName, accID, tempTime, tempTimerTime));
 		}
 		currentAccount = Accounts[0];
 	}
@@ -56,9 +56,9 @@ void Timebank::writeToFile() {
 			{"hours", Accounts[i]->getHours()},
 			{"minutes", Accounts[i]->getMinutes()},
 			{"seconds", Accounts[i]->getSeconds()},
-			{"wastingHours", Accounts[i]->getWastingHours()},
-			{"wastingMinutes", Accounts[i]->getWastingMinutes()},
-			{"wastingSeconds", Accounts[i]->getWastinghSeconds()}
+			{"timerHours", Accounts[i]->getTimerHours()},
+			{"timerMinutes", Accounts[i]->getTimerMinutes()},
+			{"timerSeconds", Accounts[i]->getTimerSeconds()}
 		};
 	}
 	
@@ -98,21 +98,21 @@ void Timebank::deleteAccount(int index) {
 
 	if (numberOfAccounts > 1) {
 		if (currentAccount == Accounts[index]) {
-			int newIndex = index + (index == 0 ? 1 : -1); //Decreases index by 1 if there is more than 
-														  //1 acc and we are not in the 1st one.
-														  //If we are in the 1st acc, we increase index by 1
+			int newIndex = index + (index == 0 ? 1 : -1); //When we delete acc we are in, we move into
+														  //acc on the left. If we are in 1st acc, 
+														  //we move into into acc on the right
 			currentAccount = Accounts[newIndex];
 		}
 	}
 	else { currentAccount = nullptr; } //If there is only 1 acc
 
 	delete Accounts[index];
-	Accounts.erase(Accounts.begin() + index); //To delete pointer in array
+	Accounts.erase(Accounts.begin() + index); //To delete pointer in vector
 	numberOfAccounts--;
 	numerateAccounts(index);
 }
 void Timebank::deleteAllAccounts() {
-	for (Account* item : Accounts) { delete item; }
+	for (Account* acc : Accounts) { delete acc; }
 	Accounts.clear();
 	numberOfAccounts = 0;
 }
@@ -160,9 +160,9 @@ void Timebank::substractSeconds(int seconds) {
 void Timebank::printCurrentAccount() { currentAccount->printAccountData(); }
 
 void Timebank::printAllAccounts() {
-	for (Account* item : Accounts) {
-		item->printAccountData();
-		std::cout << std::endl;
+	for (Account* acc : Accounts) {
+		acc->printAccountData();
+		std::cout << "\n";
 	}
 }
 

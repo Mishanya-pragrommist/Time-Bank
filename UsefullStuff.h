@@ -2,6 +2,7 @@
 //that will be used in GUI
 #ifndef USEFULLSTUFF_H 
 #define USEFULLSTUFF_H
+#include <iostream> //Of course, in future I will delete this
 
 struct Time { int hours, minutes, seconds; };
 
@@ -18,6 +19,16 @@ enum Commands //Temporary used thing. I guess its won't be usefull in GUI. But w
 	GOTO, // 9
 	DELETEACC, // 10
 	STOP // 11
+};
+
+class TimeHelper 
+{
+public:
+	static Time convertSecondsToTime(int seconds); //For example, 4830 seconds converts to 1:20:30
+	static void addTime(Time& time, int seconds); //Firstly converts seconds to time struct, then
+												  //adds it to account/timer time
+
+	static void substractTime(Time& time, int seconds); //Same as addTime() but substracts time
 };
 
 #endif

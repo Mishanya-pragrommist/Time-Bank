@@ -12,13 +12,13 @@ class Timebank
 private:
 	std::vector<Account*> Accounts;
 	Account* currentAccount;
-	
+	int numberOfAccounts;
+
 	//For saving and reading data
 	std::string savingFilePath = "save/savings.json";
 	void writeToFile();
 	void readFromFile();
-
-	int numberOfAccounts;
+	
 	void numerateAccounts(int start);
 		
 public:
@@ -27,7 +27,8 @@ public:
 
 	int getNumberOfAccounts();
 	std::string getAccountName(int index);
-	//All methods that takes "index" should be smaller in 1 than real number of acc u r looking for
+	//Index given to all methods that takes it should be smaller in 1 
+	//than real number of acc u r looking for
 	//For example, to find acc #3 u need to enter index 2
 
 	//To manage accounts
@@ -54,9 +55,8 @@ public:
 	void substractMinutes(int minutes);
 	void substractSeconds(int seconds);
 
-	//If user doesnt want to waste time
-	void returnTimeToAccount();
-
+	void returnTimeToAccount();	//If user doesnt want to waste time
+	
 	void startTimer();
 };
 

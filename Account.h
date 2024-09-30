@@ -8,36 +8,35 @@
 class Account
 {
 private:
-	Time time, wastingTime;
-	//long long secondsTime;
-
+	Time accountTime;
+	
 	Timer timer;
 	std::string name;
 	int accountID;
-	
+
 public:
-	Account(std::string name, int accountID, Time time, Time wastingTime);
-	Account(std::string name, int accountID);
+	Account(std::string name, int accountID, Time time, Time timerTime); //Used when timebank 
+																		   //reads data from file
+	Account(std::string name, int accountID); //Used when user creates new account
 
 	void setName(std::string name);
 	void setID(int accountID);
+
+	//Getters
 	std::string getName();
 	int getAccountID();
-
+	
 	int getHours();
 	int getMinutes();
 	int getSeconds();
 
-	int getWastingHours();
-	int getWastingMinutes();
-	int getWastinghSeconds();
+	int getTimerHours();
+	int getTimerMinutes();
+	int getTimerSeconds();
 	
-	//To convert seconds like 4830 to time like 1:20:30
-	static Time convertSecondsToTime(int time);
-
 	//To work with the time
 	void updateTime(int hours, int minutes, int seconds);
-
+	
 	void addHours(int hours);
 	void addMinutes(int minutes);
 	void addSeconds(int seconds);
@@ -46,7 +45,7 @@ public:
 	void substractMinutes(int minutes);
 	void substractSeconds(int seconds);
 	
-	void returnTimeToAccount();
+	void returnTimeToAccount(); //Return time from wastingTime to time an account
 
 	void startTimer();
 

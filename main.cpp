@@ -52,6 +52,7 @@ int main()
         default:
             std::cout << "Error: I dont know this command\n"; break;
         }
+        std::cout << "\n";
     }
 
     return 0;

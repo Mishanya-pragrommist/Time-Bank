@@ -1,23 +1,23 @@
 {
     "Account #1": {
         "accountID": 1,
-        "hours": 25,
-        "minutes": 18,
-        "name": "for nothing",
-        "seconds": 20,
-        "wastingHours": 0,
-        "wastingMinutes": 0,
-        "wastingSeconds": 0
+        "hours": 20,
+        "minutes": 20,
+        "name": "kirieshka",
+        "seconds": 30,
+        "timerHours": 0,
+        "timerMinutes": 8,
+        "timerSeconds": 0
     },
     "Account #2": {
         "accountID": 2,
-        "hours": 0,
-        "minutes": 39,
-        "name": "kirieshka",
-        "seconds": 50,
-        "wastingHours": 0,
-        "wastingMinutes": 0,
-        "wastingSeconds": 0
+        "hours": 1,
+        "minutes": 20,
+        "name": "for memes",
+        "seconds": 20,
+        "timerHours": 0,
+        "timerMinutes": 0,
+        "timerSeconds": 0
     },
     "Timebank": {
         "numberOfAccounts": 2
