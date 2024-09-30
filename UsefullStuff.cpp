@@ -30,11 +30,10 @@ void TimeHelper::addTime(Time& time, int seconds) {
 
 void TimeHelper::substractTime(Time& time, int seconds) {
 	Time temp = convertSecondsToTime(seconds);
-	if (time.hours < temp.hours
-		&& time.minutes < temp.minutes
-		&& time.seconds < temp.seconds) {
-		std::cout << "Sorry, but I dont have enough time for you=(\n";
-		return;
+	if (time.hours <= temp.hours
+		&& time.minutes <= temp.minutes
+		&& time.seconds <= temp.seconds) {
+		throw std::exception("Error: there is not enough time to give you\n");
 	}
 	time.hours -= temp.hours;
 	time.minutes -= temp.minutes;

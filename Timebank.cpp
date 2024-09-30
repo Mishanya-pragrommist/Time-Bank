@@ -129,29 +129,34 @@ void Timebank::renameAccount(int index, std::string newname) {
 
 //To add time
 void Timebank::addHours(int hours) {
-	if (hours <= 0) { return; }
+	if (hours <= 0) { throw std::exception("Entered hours is <= 0"); }
 	currentAccount->addHours(hours);
 }
 void Timebank::addMinutes(int minutes) {
-	if (minutes <= 0) { return; }
+	if (minutes <= 0) { throw std::exception("Entered minutes is <= 0"); }
 	currentAccount->addMinutes(minutes);
 }
 void Timebank::addSeconds(int seconds) {
-	if (seconds <= 0) { return; }
+	if (seconds <= 0) { throw std::exception("Entered seconds is <= 0"); }
 	currentAccount->addSeconds(seconds);
 }
 
 //To substract time
 void Timebank::substractHours(int hours) {
-	if (hours <= 0) { return; }
+	if (hours <= 0) { throw std::exception("Requested hours is <= 0"); }
 	currentAccount->substractHours(hours);
 }
 void Timebank::substractMinutes(int minutes) {
-	if (minutes <= 0) { return; }
-	currentAccount->substractMinutes(minutes);
+	if (minutes <= 0) { throw std::exception("Requested minutes is <= 0"); }
+	try {
+		currentAccount->substractMinutes(minutes);
+	}
+	catch (std::exception& error) {
+		throw error;
+	}
 }
 void Timebank::substractSeconds(int seconds) {
-	if (seconds <= 0) { return; }
+	if (seconds <= 0) { throw std::exception("Requested seconds is <= 0"); }
 	currentAccount->substractSeconds(seconds);
 }
 

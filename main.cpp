@@ -90,26 +90,28 @@ void addTime_handler(Timebank& timebank) {
     char what;
     std::cout << "Add time (for ex: 30 m or 5 h)(<=0 to cancel): ";
     std::cin >> timeEntered >> what;
-    if (timeEntered <= 0) {
-        std::cout << "You cancelled adding time\n"; return;
+    try {
+        if (what == 'h') { timebank.addHours(timeEntered); }
+        else if (what == 'm') { timebank.addMinutes(timeEntered); }
+        else if (what == 's') { timebank.addSeconds(timeEntered); }
+        else { std::cout << "Error: it's not h/m/s\n"; }
     }
-    if (what == 'h') { timebank.addHours(timeEntered); }
-    else if (what == 'm') { timebank.addMinutes(timeEntered); }
-    else if (what == 's') { timebank.addSeconds(timeEntered); }
-    else { std::cout << "Error: it's not h/m/s\n"; }
+    catch(std::exception& error) {
+        std::cout << error.what() << "\n";
+    }
 }
 void getTime_handler(Timebank& timebank) {
     int timeEntered;
     char what;
     std::cout << "How much time u want to get (for ex: 30 h, or 1 m)(<=0 to cancell): ";
     std::cin >> timeEntered >> what;
-    if (timeEntered <= 0) { //It will be changed
-        std::cout << "Okey, you cancelled get time\n"; return;
+    try {
+        if (what == 'h') { timebank.substractHours(timeEntered); }
+        else if (what == 'm') { timebank.substractMinutes(timeEntered); }
+        else if (what == 's') { timebank.substractSeconds(timeEntered); }
+        else { std::cout << "Error: its not h/m/s\n"; }
     }
-    if (what == 'h') { timebank.substractHours(timeEntered); }
-    else if (what == 'm') { timebank.substractMinutes(timeEntered); }
-    else if (what == 's') { timebank.substractSeconds(timeEntered); }
-    else { std::cout << "Error: its not h/m/s\n"; }
+    catch (std::exception& error) { std::cout << error.what() << "\n"; }
 }
 void returnTime_handler(Timebank& timebank) {
     timebank.returnTimeToAccount();

@@ -40,21 +40,26 @@ void Account::updateTime(int hours, int minutes, int seconds) {
 void Account::addHours(int hours) { accountTime.hours += hours; } 
 //There's no need to convert hours into Time struct and use addTime()
 //However, if I added days for Time struct, this would make sense
+//But I'm not gonna do this =)
 
 void Account::addMinutes(int minutes) { TimeHelper::addTime(accountTime, minutes * 60); }
 void Account::addSeconds(int seconds) { TimeHelper::addTime(accountTime, seconds); }
 
 void Account::substractHours(int hours) {
     if (accountTime.hours < hours) {
-        std::cout << "Error: I dont have enough hours for you\n";
-        return;
+        throw std::exception("There is not enough hours\n");
     }
     accountTime.hours -= hours;
     timer.addHours(hours);
 }
 void Account::substractMinutes(int minutes) {
-    TimeHelper::substractTime(accountTime, minutes * 60);
-    timer.addMinutes(minutes);
+    try {
+        TimeHelper::substractTime(accountTime, minutes * 60);
+        timer.addMinutes(minutes);
+    }
+    catch (std::exception& error) {
+        throw error;
+    }
 }
 void Account::substractSeconds(int seconds) {
     TimeHelper::substractTime(accountTime, seconds);
@@ -77,6 +82,12 @@ void Account::printAccountData() { //Again, print funcs will be changed so they 
 }
 
 void Account::returnTimeToAccount() {
+    if (timer.getHours() == 0 
+        && timer.getMinutes() == 0
+        && timer.getSeconds() == 0) {
+        return;
+    } //If there are no time to return
+
     addHours(timer.getHours());
     addMinutes(timer.getMinutes());
     addSeconds(timer.getSeconds());
