@@ -1,10 +1,10 @@
 {
     "Account #1": {
         "accountID": 1,
-        "hours": 23,
-        "minutes": 23,
+        "hours": 25,
+        "minutes": 18,
         "name": "for nothing",
-        "seconds": 10,
+        "seconds": 20,
         "wastingHours": 0,
         "wastingMinutes": 0,
         "wastingSeconds": 0

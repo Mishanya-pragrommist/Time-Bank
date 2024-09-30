@@ -9,6 +9,8 @@ class Account
 {
 private:
 	Time time, wastingTime;
+	//long long secondsTime;
+
 	Timer timer;
 	std::string name;
 	int accountID;
@@ -29,6 +31,9 @@ public:
 	int getWastingHours();
 	int getWastingMinutes();
 	int getWastinghSeconds();
+	
+	//To convert seconds like 4830 to time like 1:20:30
+	static Time convertSecondsToTime(int time);
 
 	//To work with the time
 	void updateTime(int hours, int minutes, int seconds);

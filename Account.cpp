@@ -11,6 +11,18 @@ Account::Account(std::string name, int accountID) {
     wastingTime = { 0, 0, 0 };
 }
 
+Time Account::convertSecondsToTime(int seconds) {
+    Time convTime;
+    convTime.hours = seconds / 3600;
+    seconds -= convTime.hours * 3600;
+
+    convTime.minutes = seconds / 60;
+    seconds -= convTime.minutes * 60;
+
+    convTime.seconds = seconds;
+    return convTime;
+}
+
 //Getters and setters
 void Account::setName(std::string name) { this->name = name; }
 void Account::setID(int accountID) { this->accountID = accountID; }
@@ -29,25 +41,36 @@ int Account::getWastinghSeconds() { return wastingTime.seconds; }
 void Account::updateTime(int hours, int minutes, int seconds) {
     time = { hours, minutes, seconds };
 }
-void Account::addHours(int hours) {
-    time.hours += hours;
-}
+void Account::addHours(int hours) { time.hours += hours; }
+
 void Account::addMinutes(int minutes) {
-    time.minutes += minutes;
+    Time temp = convertSecondsToTime(minutes * 60);
+    time.seconds += temp.seconds;
+    time.minutes += temp.minutes;
+    time.hours += temp.hours;
+    
+    if (time.seconds >= 60) {
+        time.minutes++;
+        time.seconds -= 60;
+    }
     if (time.minutes >= 60) {
         time.hours++;
         time.minutes -= 60;
     }
 }
 void Account::addSeconds(int seconds) {
-    time.seconds += seconds;
+    Time temp = convertSecondsToTime(seconds);
+    time.seconds += temp.seconds;
+    time.minutes += temp.minutes;
+    time.hours += temp.hours;
+
     if (time.seconds >= 60) {
         time.minutes++;
         time.seconds -= 60;
-        if (time.minutes >= 60) {
-            time.hours++;
-            time.minutes -= 60;
-        }
+    }
+    if (time.minutes >= 60) {
+        time.hours++;
+        time.minutes -= 60;
     }
 }
 
