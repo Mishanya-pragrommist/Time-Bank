@@ -94,7 +94,15 @@ void Timebank::changeAccount(int index) {
 }
 
 void Timebank::deleteAccount(int index) {
-	if (index < 0 || index >= Accounts.size() || numberOfAccounts <= 1) { throw "You can't delete one left account\n"; }
+	if (index < 0 || index >= Accounts.size()) {
+		throw std::exception("Error: Index is out of range\n");
+	}
+	if (numberOfAccounts <= 1) {
+		throw std::exception("Error: You can't delete account if it's only one you have\n");
+	}
+	if (currentAccount->getAccountID() - 1 == index) {
+		throw std::exception("Error: You can't delete acount you are in\n");
+	}
 
 	if (currentAccount == Accounts[index]) {
 		int newIndex = index + (index == 0 ? 1 : -1); //When we delete acc we are in, we move into

@@ -82,6 +82,10 @@ void updateTime_handler(Timebank& timebank) {
     Time time;
     std::cout << "Update hours, minutes and seconds to current time: ";
     std::cin >> time.hours >> time.minutes >> time.seconds;
+    if (time.hours < 0 || time.minutes < 0 || time.seconds < 0) {
+        std::cout << "Error: you can't enter negative time\n";
+        return;
+    }
     timebank.updateTime(time.hours, time.minutes, time.seconds);
 }
 void addTime_handler(Timebank& timebank) {
@@ -102,13 +106,13 @@ void getTime_handler(Timebank& timebank) {
     char what;
     std::cout << "How much time u want to get (for ex: 30 h, or 1 m)(<=0 to cancell): ";
     std::cin >> timeEntered >> what;
-    if (timeEntered <= 0) {
+    if (timeEntered <= 0) { //It will be changed
         std::cout << "Okey, you cancelled get time\n"; return;
     }
     if (what == 'h') { timebank.substractHours(timeEntered); }
     else if (what == 'm') { timebank.substractMinutes(timeEntered); }
     else if (what == 's') { timebank.substractSeconds(timeEntered); }
-    else { std::cout << "Error: its no h/m/s\n"; }
+    else { std::cout << "Error: its not h/m/s\n"; }
 }
 void returnTime_handler(Timebank& timebank) {
     timebank.returnTimeToAccount();
@@ -138,17 +142,17 @@ void deleteAccount_handler(Timebank& timebank) {
     int number;
     std::cout << "Enter number of acc you want to delete (<=0 to cancell): ";
     std::cin >> number;
-    if (number <= 0 || number >= timebank.getNumberOfAccounts()) {
+    if (number <= 0 || number > timebank.getNumberOfAccounts()) {
         std::cout << "You cancelled deleting\n";
         return;
     }
-    
-    if (timebank.deleteAccount(number - 1) == 1) { //Index of acc is smaller than its real number
-        std::cout << "You can't delete acc if there is only 1 acc left\n";
-        return;
+    try {
+        timebank.deleteAccount(number - 1); //Index of acc is smaller than its real number
+        std::cout << "You deleted account #" << number << "\n";
     }
-    std::cout << "You deleted account #" << number 
-        << " " << timebank.getAccountName(number - 1) << std::endl;
+    catch (std::exception& error) {
+        std::cout << error.what() << "\n";
+    }
 }
 void changeAccount_handler(Timebank& timebank) {
     int number;

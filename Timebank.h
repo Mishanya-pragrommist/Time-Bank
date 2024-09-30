@@ -3,6 +3,7 @@
 #include <iostream> //Delete this and all std::cout in future
 #include <fstream>
 #include <vector>
+#include <exception>
 #include "nlohmann/json.hpp"
 #include "Account.h"
 #include "UsefullStuff.h"
