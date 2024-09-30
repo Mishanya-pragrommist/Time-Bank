@@ -18,7 +18,8 @@ enum Commands //Temporary used thing. I guess its won't be usefull in GUI. But w
 	RENAMECURRENTACC, // 8
 	GOTO, // 9
 	DELETEACC, // 10
-	STOP // 11
+	CLEARACC, // 11
+	STOP // 12
 };
 
 class TimeHelper 

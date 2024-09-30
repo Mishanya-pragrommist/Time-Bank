@@ -1,10 +1,10 @@
 {
     "Account #1": {
         "accountID": 1,
-        "hours": 10,
-        "minutes": 10,
-        "name": "kirieshka",
-        "seconds": 10,
+        "hours": 0,
+        "minutes": 0,
+        "name": "default",
+        "seconds": 0,
         "timerHours": 0,
         "timerMinutes": 0,
         "timerSeconds": 0

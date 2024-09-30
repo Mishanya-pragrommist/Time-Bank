@@ -68,10 +68,6 @@ void Timebank::writeToFile() {
 
 //Getters
 int Timebank::getNumberOfAccounts() { return numberOfAccounts; }
-std::string Timebank::getAccountName(int index) { 
-	if (index < 0 || index >= Accounts.size()) return "\0";
-	return Accounts[index]->getName(); 
-}
 
 void Timebank::numerateAccounts(int start) {
 	for (int i = start; i < Accounts.size(); i++) { Accounts[i]->setID(i + 1); }
@@ -86,9 +82,11 @@ void Timebank::createAccount(std::string name) {
 	}
 }
 void Timebank::changeAccount(int index) {
-	if (index < 0 || index > Accounts.size()
-		|| index == currentAccount->getAccountID() - 1) { //If we are already in the acc we try to change
-		return;
+	if (index < 0 || index > Accounts.size()) { //If we are already in the acc we try to change
+		throw std::exception("Error: Index is out of range");
+	}
+	if (index == currentAccount->getAccountID() - 1) {
+		throw std::exception("You are already in this account(=\n");
 	}
 	currentAccount = Accounts[index];
 }
@@ -103,14 +101,7 @@ void Timebank::deleteAccount(int index) {
 	if (currentAccount->getAccountID() - 1 == index) {
 		throw std::exception("Error: You can't delete acount you are in\n");
 	}
-
-	if (currentAccount == Accounts[index]) {
-		int newIndex = index + (index == 0 ? 1 : -1); //When we delete acc we are in, we move into
-													  //acc on the left. If we are in 1st acc, 
-													  //we move into into acc on the right
-		currentAccount = Accounts[newIndex];
-	}
-
+	
 	delete Accounts[index];
 	Accounts.erase(Accounts.begin() + index); //To delete pointer in vector
 	numberOfAccounts--;
@@ -121,6 +112,8 @@ void Timebank::deleteAllAccounts() {
 	Accounts.clear();
 	numberOfAccounts = 0;
 }
+
+void Timebank::clearAccount() { currentAccount->clearAccount(); }
 
 void Timebank::updateTime(int hours, int minutes, int seconds) {
 	currentAccount->updateTime(hours, minutes, seconds);

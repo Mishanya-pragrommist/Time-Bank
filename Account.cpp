@@ -27,6 +27,12 @@ int Account::getTimerHours() { return timer.getHours(); }
 int Account::getTimerMinutes() { return timer.getMinutes(); }
 int Account::getTimerSeconds() { return timer.getSeconds(); }
 
+void Account::clearAccount() {
+    updateTime(0, 0, 0);
+    timer.resetTime();
+    name = "default";
+}
+
 void Account::updateTime(int hours, int minutes, int seconds) {
     accountTime = { hours, minutes, seconds };
 }

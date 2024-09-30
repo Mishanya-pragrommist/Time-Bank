@@ -16,7 +16,7 @@ private:
 
 public:
 	Account(std::string name, int accountID, Time time, Time timerTime); //Used when timebank 
-																		   //reads data from file
+																		 //reads data from file
 	Account(std::string name, int accountID); //Used when user creates new account
 
 	void setName(std::string name);
@@ -34,6 +34,8 @@ public:
 	int getTimerMinutes();
 	int getTimerSeconds();
 	
+	void clearAccount();
+
 	//To work with the time
 	void updateTime(int hours, int minutes, int seconds);
 	

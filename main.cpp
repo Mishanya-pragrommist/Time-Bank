@@ -41,6 +41,9 @@ int main()
             createAccount_handler(timebank); break;
         case RENAMECURRENTACC:
             renameCurrentAccount_handler(timebank); break;
+        case CLEARACC:
+            timebank.clearAccount();
+            break;
         case DELETEACC:
             deleteAccount_handler(timebank); break;
         case GOTO:
@@ -58,17 +61,11 @@ int main()
 }
 
 void startWork_handler(Timebank& timebank, int& command) {
-    std::string name;
-    if (timebank.getNumberOfAccounts() <= 0) {
-        std::cin.clear();
-        std::cin.ignore(1000, '\n');
-        std::cout << "Create new account and enter name of it: ";
-        std::getline(std::cin, name);
-        timebank.createAccount(name);
-    }
     timebank.printCurrentAccount();
-    std::cout << "Enter command (update time-1, add time-2, get time-3, return time-4, start timer-5\n"
-        << " print all accs-6, create new acc-7, rename cur acc-8, go to another acc-9, delete acc-10, stop-11): ";
+    std::cout << "Enter command (update time-1, add time-2, get time-3," 
+        << " return time - 4, start timer - 5\n"
+        << " print all accs-6, create new acc-7, rename cur acc-8,\n" 
+        << "go to another acc-9, delete acc-10, clear acc-11, stop-12): ";
     std::cin >> command;
 
     if (std::cin.fail()) {
@@ -161,6 +158,11 @@ void changeAccount_handler(Timebank& timebank) {
         std::cout << "Error: there is no account with this number\n";
         return;
     }
-    timebank.changeAccount(number - 1);
-    std::cout << "You changed account successfully=)\n";
+    try {
+        timebank.changeAccount(number - 1);
+        std::cout << "You changed account successfully=)\n";
+    }
+    catch (std::exception& error) {
+        std::cout << error.what() << "\n";
+    }
 }

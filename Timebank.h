@@ -27,7 +27,6 @@ public:
 	~Timebank();
 
 	int getNumberOfAccounts();
-	std::string getAccountName(int index);
 	//Index given to all methods that takes it should be smaller in 1 
 	//than real number of acc u r looking for
 	//For example, to find acc #3 u need to enter index 2
@@ -43,6 +42,8 @@ public:
 	void deleteAccount(int index);
 	void deleteAllAccounts();
 	
+	void clearAccount();
+
 	void printCurrentAccount(); //Print functions will be either changed or deleted
 	void printAllAccounts();
 
