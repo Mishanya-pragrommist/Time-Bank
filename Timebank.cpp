@@ -13,31 +13,8 @@ void Timebank::readFromFile() {
 	filehandler.readFromFile(this);
 }
 void Timebank::writeToFile() {
-	std::ofstream fout(savingFilePath);
-	if (!fout.is_open()) { std::cout << "Error: fout wasnt open\n"; return; }
-
-	nlohmann::json jwrite;
-
-	//Firstly we need to know how much of accounts there are
-	jwrite["Timebank"] = { { "numberOfAccounts", numberOfAccounts} };
-
-	for (int i = 0; i < Accounts.size(); i++) {
-		//Same as in readFromFile() func
-		std::string objectName = "Account #" + std::to_string(i + 1);
-		jwrite[objectName] = {
-			{"name", Accounts[i]->getName()},
-			{"accountID", Accounts[i]->getAccountID()},
-			{"hours", Accounts[i]->getHours()},
-			{"minutes", Accounts[i]->getMinutes()},
-			{"seconds", Accounts[i]->getSeconds()},
-			{"timerHours", Accounts[i]->getTimerHours()},
-			{"timerMinutes", Accounts[i]->getTimerMinutes()},
-			{"timerSeconds", Accounts[i]->getTimerSeconds()}
-		};
-	}
-	
-	fout << jwrite.dump(4);
-	fout.close();
+	FileHandler filehandler;
+	filehandler.writeToFile(this);
 }
 
 //Getters
