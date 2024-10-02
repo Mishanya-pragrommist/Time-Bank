@@ -146,6 +146,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Account.cpp" />
+    <ClCompile Include="FileHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Timebank.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -153,6 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Account.h" />
+    <ClInclude Include="FileHandler.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UsefullStuff.h" />
     <ClInclude Include="Timebank.h" />

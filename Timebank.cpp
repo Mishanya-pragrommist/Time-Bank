@@ -9,44 +9,8 @@ Timebank::~Timebank() {
 
 //For saving/reading data
 void Timebank::readFromFile() {
-	std::ifstream fin(savingFilePath);
-	if (!fin.is_open()) { std::cout << "Error: fin wasn't opened\n"; return; }
-
-	nlohmann::json jread;
-	fin >> jread;
-
-	numberOfAccounts = jread["Timebank"]["numberOfAccounts"].get<int>();
-
-	Time tempTime, tempTimeLeft;
-	if (numberOfAccounts > 0) { //Reading data for each account
-		for (int i = 1; i <= numberOfAccounts; i++) {
-			std::string objectName = "Account #" + std::to_string(i);
-
-			tempTime = {
-				jread[objectName]["hours"].get<int>(),
-				jread[objectName]["minutes"].get<int>(),
-				jread[objectName]["seconds"].get<int>() 
-			};
-			
-			tempTimeLeft = {
-				jread[objectName]["hoursLeft"].get<int>(),
-				jread[objectName]["minutesLeft"].get<int>(),
-				jread[objectName]["secondsLeft"].get<int>()
-			};
-			
-			std::string accName = jread[objectName]["name"].get<std::string>();
-			int accID = jread[objectName]["accountID"].get<int>();
-			Accounts.push_back(new Account(accName, accID, tempTime, tempTimeLeft));
-		}
-	}
-	else { //If there is no accounts yet
-		tempTime = { 0, 0, 0 };
-		tempTimeLeft = { 0, 0, 0 };
-		Accounts.push_back(new Account("default", 1, tempTime, tempTimeLeft));
-		numberOfAccounts++;
-	}
-	currentAccount = Accounts[0];
-	fin.close();
+	FileHandler filehandler;
+	filehandler.readFromFile(this);
 }
 void Timebank::writeToFile() {
 	std::ofstream fout(savingFilePath);
@@ -66,9 +30,9 @@ void Timebank::writeToFile() {
 			{"hours", Accounts[i]->getHours()},
 			{"minutes", Accounts[i]->getMinutes()},
 			{"seconds", Accounts[i]->getSeconds()},
-			{"hoursLeft", Accounts[i]->getTimerHours()},
-			{"minutesLeft", Accounts[i]->getTimerMinutes()},
-			{"secondsLeft", Accounts[i]->getTimerSeconds()}
+			{"timerHours", Accounts[i]->getTimerHours()},
+			{"timerMinutes", Accounts[i]->getTimerMinutes()},
+			{"timerSeconds", Accounts[i]->getTimerSeconds()}
 		};
 	}
 	

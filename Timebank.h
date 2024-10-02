@@ -1,22 +1,22 @@
 #ifndef TIMEBANK_H
 #define TIMEBANK_H
 #include <iostream> //Delete this and all std::cout in future
-#include <fstream>
 #include <vector>
 #include <exception>
 #include "nlohmann/json.hpp"
 #include "Account.h"
+#include "FileHandler.h"
 #include "UsefullStuff.h"
 
 class Timebank
 {
+	friend class FileHandler;
 private:
 	std::vector<Account*> Accounts;
 	Account* currentAccount;
 	int numberOfAccounts;
 
 	//For saving and reading data
-	std::string savingFilePath = "save/savings.json";
 	void writeToFile();
 	void readFromFile();
 	
