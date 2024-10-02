@@ -1,12 +1,12 @@
 {
     "Account #1": {
         "accountID": 1,
-        "hours": 0,
+        "hours": 1,
         "hoursLeft": 0,
-        "minutes": 0,
+        "minutes": 50,
         "minutesLeft": 0,
         "name": "default",
-        "seconds": 0,
+        "seconds": 40,
         "secondsLeft": 0
     },
     "Timebank": {

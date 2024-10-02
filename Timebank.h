@@ -3,14 +3,13 @@
 #include <iostream> //Delete this and all std::cout in future
 #include <vector>
 #include <exception>
-#include "nlohmann/json.hpp"
 #include "Account.h"
 #include "FileHandler.h"
 #include "UsefullStuff.h"
 
 class Timebank
 {
-	friend class FileHandler;
+	friend class FileHandler; //path to saving file is in this class
 private:
 	std::vector<Account*> Accounts;
 	Account* currentAccount;
@@ -21,7 +20,7 @@ private:
 	void readFromFile();
 	
 	void numerateAccounts(int start);
-		
+	
 public:
 	Timebank();
 	~Timebank();
@@ -38,11 +37,9 @@ public:
 	void renameCurrentAccount(std::string newname);
 	void renameAccount(int index, std::string newname);
 
-	//On success, it returns 0, if user tries to delete only acc in timebank, it returns 1
+	void clearAccount();
 	void deleteAccount(int index);
 	void deleteAllAccounts();
-	
-	void clearAccount();
 
 	void printCurrentAccount(); //Print functions will be either changed or deleted
 	void printAllAccounts();

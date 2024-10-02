@@ -141,10 +141,6 @@ void deleteAccount_handler(Timebank& timebank) {
     int number;
     std::cout << "Enter number of acc you want to delete (<=0 to cancell): ";
     std::cin >> number;
-    if (number <= 0 || number > timebank.getNumberOfAccounts()) {
-        std::cout << "You cancelled deleting\n";
-        return;
-    }
     try {
         timebank.deleteAccount(number - 1); //Index of acc is smaller than its real number
         std::cout << "You deleted account #" << number << "\n";
