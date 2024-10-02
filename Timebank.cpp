@@ -16,26 +16,36 @@ void Timebank::readFromFile() {
 	fin >> jread;
 
 	numberOfAccounts = jread["Timebank"]["numberOfAccounts"].get<int>();
+
+	Time tempTime, tempTimeLeft;
 	if (numberOfAccounts > 0) { //Reading data for each account
 		for (int i = 1; i <= numberOfAccounts; i++) {
-			//Each object in .json file has a name "Acocunt #" + its number in list
 			std::string objectName = "Account #" + std::to_string(i);
 
-			Time tempTime, tempTimerTime;
-			tempTime.hours = jread[objectName]["hours"].get<int>();
-			tempTime.minutes = jread[objectName]["minutes"].get<int>();
-			tempTime.seconds = jread[objectName]["seconds"].get<int>();
-
-			tempTimerTime.hours = jread[objectName]["timerHours"].get<int>();
-			tempTimerTime.minutes = jread[objectName]["timerMinutes"].get<int>();
-			tempTimerTime.seconds = jread[objectName]["timerSeconds"].get<int>();
-
+			tempTime = {
+				jread[objectName]["hours"].get<int>(),
+				jread[objectName]["minutes"].get<int>(),
+				jread[objectName]["seconds"].get<int>() 
+			};
+			
+			tempTimeLeft = {
+				jread[objectName]["hoursLeft"].get<int>(),
+				jread[objectName]["minutesLeft"].get<int>(),
+				jread[objectName]["secondsLeft"].get<int>()
+			};
+			
 			std::string accName = jread[objectName]["name"].get<std::string>();
 			int accID = jread[objectName]["accountID"].get<int>();
-			Accounts.push_back(new Account(accName, accID, tempTime, tempTimerTime));
+			Accounts.push_back(new Account(accName, accID, tempTime, tempTimeLeft));
 		}
-		currentAccount = Accounts[0];
 	}
+	else { //If there is no accounts yet
+		tempTime = { 0, 0, 0 };
+		tempTimeLeft = { 0, 0, 0 };
+		Accounts.push_back(new Account("default", 1, tempTime, tempTimeLeft));
+		numberOfAccounts++;
+	}
+	currentAccount = Accounts[0];
 	fin.close();
 }
 void Timebank::writeToFile() {
@@ -56,9 +66,9 @@ void Timebank::writeToFile() {
 			{"hours", Accounts[i]->getHours()},
 			{"minutes", Accounts[i]->getMinutes()},
 			{"seconds", Accounts[i]->getSeconds()},
-			{"timerHours", Accounts[i]->getTimerHours()},
-			{"timerMinutes", Accounts[i]->getTimerMinutes()},
-			{"timerSeconds", Accounts[i]->getTimerSeconds()}
+			{"hoursLeft", Accounts[i]->getTimerHours()},
+			{"minutesLeft", Accounts[i]->getTimerMinutes()},
+			{"secondsLeft", Accounts[i]->getTimerSeconds()}
 		};
 	}
 	
@@ -144,20 +154,21 @@ void Timebank::addSeconds(int seconds) {
 //To substract time
 void Timebank::substractHours(int hours) {
 	if (hours <= 0) { throw std::exception("Requested hours is <= 0"); }
-	currentAccount->substractHours(hours);
+
+	try { currentAccount->substractHours(hours); }
+	catch (std::exception& hoursLack) { throw hoursLack; }
 }
 void Timebank::substractMinutes(int minutes) {
 	if (minutes <= 0) { throw std::exception("Requested minutes is <= 0"); }
-	try {
-		currentAccount->substractMinutes(minutes);
-	}
-	catch (std::exception& error) {
-		throw error;
-	}
+
+	try { currentAccount->substractMinutes(minutes); }
+	catch (std::exception& error) { throw error; }
 }
 void Timebank::substractSeconds(int seconds) {
 	if (seconds <= 0) { throw std::exception("Requested seconds is <= 0"); }
-	currentAccount->substractSeconds(seconds);
+
+	try { currentAccount->substractSeconds(seconds); }
+	catch (std::exception& error) { throw error; }
 }
 
 void Timebank::printCurrentAccount() { currentAccount->printAccountData(); }

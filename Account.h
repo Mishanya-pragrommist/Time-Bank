@@ -9,16 +9,16 @@ class Account
 {
 private:
 	Time accountTime;
-	
 	Timer timer;
 	std::string name;
 	int accountID;
 
 public:
-	Account(std::string name, int accountID, Time time, Time timerTime); //Used when timebank 
+	Account(std::string accountName, int accountID, Time time, Time timerTime); //Used when timebank 
 																		 //reads data from file
-	Account(std::string name, int accountID); //Used when user creates new account
+	Account(std::string accountName, int accountID); //Used when user creates new account
 
+	//Setters
 	void setName(std::string name);
 	void setID(int accountID);
 
@@ -33,8 +33,6 @@ public:
 	int getTimerHours();
 	int getTimerMinutes();
 	int getTimerSeconds();
-	
-	void clearAccount();
 
 	//To work with the time
 	void updateTime(int hours, int minutes, int seconds);
@@ -48,6 +46,7 @@ public:
 	void substractSeconds(int seconds);
 	
 	void returnTimeToAccount(); //Return time from wastingTime to time an account
+	void clearAccount(); //Set all values as 0 and name account as "default"
 
 	void startTimer();
 

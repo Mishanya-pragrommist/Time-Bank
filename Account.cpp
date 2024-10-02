@@ -1,8 +1,8 @@
 #include "Account.h"
 
-Account::Account(std::string name, int accountID, Time accountTime, Time timerTime)
+Account::Account(std::string name, int accountID, Time accountTime, Time timeLeft)
     : name(name), accountID(accountID), accountTime(accountTime) {
-    timer.setTimeLeft(timerTime);
+    timer.setTimeLeft(timeLeft);
 }
 
 Account::Account(std::string name, int accountID) {
@@ -12,10 +12,11 @@ Account::Account(std::string name, int accountID) {
     accountTime = { 0, 0, 0 };
 }
 
-//Getters and setters
+//Getters
 void Account::setName(std::string name) { this->name = name; }
 void Account::setID(int accountID) { this->accountID = accountID; }
 
+//Setters
 std::string Account::getName() { return name; }
 int Account::getAccountID() { return accountID; }
 
@@ -57,13 +58,14 @@ void Account::substractMinutes(int minutes) {
         TimeHelper::substractTime(accountTime, minutes * 60);
         timer.addMinutes(minutes);
     }
-    catch (std::exception& error) {
-        throw error;
-    }
+    catch (std::exception& minutesLack) { throw minutesLack; }
 }
 void Account::substractSeconds(int seconds) {
-    TimeHelper::substractTime(accountTime, seconds);
-    timer.addSeconds(seconds);
+    try {
+        TimeHelper::substractTime(accountTime, seconds);
+        timer.addMinutes(seconds);
+    }
+    catch (std::exception& secondssLack) { throw secondssLack; }
 }
 
 void Account::printAccountData() { //Again, print funcs will be changed so they can show data in GUI.

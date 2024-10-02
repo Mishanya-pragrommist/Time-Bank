@@ -96,8 +96,8 @@ void addTime_handler(Timebank& timebank) {
         else if (what == 's') { timebank.addSeconds(timeEntered); }
         else { std::cout << "Error: it's not h/m/s\n"; }
     }
-    catch(std::exception& error) {
-        std::cout << error.what() << "\n";
+    catch(std::exception& negativeTime) {
+        std::cout << negativeTime.what() << "\n";
     }
 }
 void getTime_handler(Timebank& timebank) {
@@ -111,7 +111,7 @@ void getTime_handler(Timebank& timebank) {
         else if (what == 's') { timebank.substractSeconds(timeEntered); }
         else { std::cout << "Error: its not h/m/s\n"; }
     }
-    catch (std::exception& error) { std::cout << error.what() << "\n"; }
+    catch (std::exception& timeLack) { std::cout << timeLack.what() << "\n"; }
 }
 void returnTime_handler(Timebank& timebank) {
     timebank.returnTimeToAccount();
