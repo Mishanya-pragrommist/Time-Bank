@@ -17,7 +17,7 @@ void Timebank::writeToFile() {
 	filehandler.writeToFile(this);
 }
 
-//Getters
+//Getters (maybe I'll add more ones)
 int Timebank::getNumberOfAccounts() { return numberOfAccounts; }
 
 void Timebank::numerateAccounts(int start) {
@@ -27,16 +27,15 @@ void Timebank::numerateAccounts(int start) {
 //To manage accounts (create, delete, change)
 void Timebank::createAccount(std::string name) {
 	Accounts.push_back(new Account(name, ++numberOfAccounts));
-	
-	if (numberOfAccounts <= 1) { 
-		currentAccount = Accounts[0]; //When we create first account
-	}
+
+	//When we create first account
+	if (numberOfAccounts <= 1) { currentAccount = Accounts[0]; }
 }
 void Timebank::changeAccount(int index) {
 	if (index < 0 || index > Accounts.size()) { 
 		throw std::exception("Error: Index is out of range");
 	}
-	if (index == currentAccount->getAccountID() - 1) { //If we are already in the acc we try to change
+	if (index == currentAccount->getAccountID() - 1) { //If we're already in the acc we try to change
 		throw std::exception("You are already in this account(=\n");
 	}
 	currentAccount = Accounts[index];
@@ -56,9 +55,10 @@ void Timebank::deleteAccount(int index) {
 	delete Accounts[index];
 	Accounts.erase(Accounts.begin() + index); //To delete pointer in vector
 	numberOfAccounts--;
-	numerateAccounts(index);
+	numerateAccounts(index); //Here it renumerates accs starting from index if deleted one cuz
+							 //we don't need to renumerate all accs
 }
-void Timebank::deleteAllAccounts() {
+void Timebank::deleteAllAccounts() { //Used in destructor
 	for (Account* acc : Accounts) { delete acc; }
 	Accounts.clear();
 	numberOfAccounts = 0;
@@ -67,6 +67,9 @@ void Timebank::deleteAllAccounts() {
 void Timebank::clearAccount() { currentAccount->clearAccount(); }
 
 void Timebank::updateTime(int hours, int minutes, int seconds) {
+	if (hours < 0 || minutes < 0 || seconds < 0) {
+		throw std::exception("Time cannot be negative, y'know=)");
+	}
 	currentAccount->updateTime(hours, minutes, seconds);
 }
 void Timebank::renameCurrentAccount(std::string newname) {

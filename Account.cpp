@@ -61,7 +61,7 @@ void Account::substractMinutes(int minutes) {
 }
 void Account::substractSeconds(int seconds) {
     try {
-        TimeHelper::substractTime(accountTime, seconds);
+        TimeHelp::substractTime(accountTime, seconds);
         timer.addMinutes(seconds);
     }
     catch (std::exception& secondssLack) { throw secondssLack; }
@@ -94,8 +94,8 @@ void Account::returnTimeToAccount() {
     addSeconds(timer.getSeconds());
     
     timer.resetTime(); //It will be useful when I add some way to stop timer while its working
-                        //Rn this func is useless since timer will 
-                        //waste all time anyway due to no interrupting
+                        //Right now this func here is useless since timer will 
+                        //waste all time anyway because of no interrupting
 }
 
 void Account::startTimer() { timer.start(); }

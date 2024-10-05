@@ -2,7 +2,7 @@
 
 Time TimeHelp::convertSecondsToTime(int seconds) {
 	int secsInHour = 3600, secsInMinute = 60;
-	Time convTime;
+	Time convTime; //Converted time
 
 	convTime.hours = seconds / secsInHour;
 	seconds -= convTime.hours * secsInHour;

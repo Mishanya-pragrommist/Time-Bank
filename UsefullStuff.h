@@ -23,12 +23,13 @@ enum Commands //Temporary used thing. I guess its won't be usefull in GUI. But w
 	QUIT // 12
 };
 
-namespace TimeHelp { //Used in Account class to make handling time easier
-	static Time convertSecondsToTime(int seconds); //For example, 4830 seconds converts to 1:20:30
-	static void addTime(Time& time, int seconds); //Firstly converts seconds to time struct, then
+namespace TimeHelp //Used in Account class to make handling time easier
+{ 
+	Time convertSecondsToTime(int seconds); //For example, 4830 seconds converts to 1:20:30
+	void addTime(Time& time, int seconds); //Firstly converts seconds to time struct, then
 												  //adds it to account/timer time
 
-	static void substractTime(Time& time, int seconds); //Same as addTime() but substracts time
+	void substractTime(Time& time, int seconds); //Same as addTime() but substracts time
 };
 
 #endif

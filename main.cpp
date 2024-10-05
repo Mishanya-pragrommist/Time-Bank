@@ -79,11 +79,10 @@ void updateTime_handler(Timebank& timebank) {
     Time time;
     std::cout << "Update hours, minutes and seconds to current time: ";
     std::cin >> time.hours >> time.minutes >> time.seconds;
-    if (time.hours < 0 || time.minutes < 0 || time.seconds < 0) {
-        std::cout << "Error: you can't enter negative time\n";
-        return;
+    try {
+        timebank.updateTime(time.hours, time.minutes, time.seconds);
     }
-    timebank.updateTime(time.hours, time.minutes, time.seconds);
+    catch (std::exception negativeTime) { std::cout << negativeTime.what() << "\n"; }
 }
 void addTime_handler(Timebank& timebank) {
     int timeEntered;
@@ -96,9 +95,7 @@ void addTime_handler(Timebank& timebank) {
         else if (what == 's') { timebank.addSeconds(timeEntered); }
         else { std::cout << "Error: it's not h/m/s\n"; }
     }
-    catch(std::exception& negativeTime) {
-        std::cout << negativeTime.what() << "\n";
-    }
+    catch(std::exception& negativeTime) { std::cout << negativeTime.what() << "\n"; }
 }
 void getTime_handler(Timebank& timebank) {
     int timeEntered;
@@ -142,7 +139,7 @@ void deleteAccount_handler(Timebank& timebank) {
     std::cout << "Enter number of acc you want to delete (<=0 to cancell): ";
     std::cin >> number;
     try {
-        timebank.deleteAccount(number - 1); //Index of acc is smaller than its real number
+        timebank.deleteAccount(number - 1); //Index of acc is smaller by 1 than its real number
         std::cout << "You deleted account #" << number << "\n";
     }
     catch (std::exception& error) {
