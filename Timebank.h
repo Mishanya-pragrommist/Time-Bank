@@ -1,8 +1,6 @@
 #ifndef TIMEBANK_H
 #define TIMEBANK_H
 #include <iostream> //Delete this and all std::cout in future
-#include <vector>
-#include <exception>
 #include "Account.h"
 #include "FileHandler.h"
 #include "UsefullStuff.h"

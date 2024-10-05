@@ -5,11 +5,21 @@
         "hoursLeft": 0,
         "minutes": 50,
         "minutesLeft": 0,
-        "name": "default",
+        "name": "for memes",
         "seconds": 40,
         "secondsLeft": 0
     },
+    "Account #2": {
+        "accountID": 2,
+        "hours": 2,
+        "hoursLeft": 0,
+        "minutes": 2,
+        "minutesLeft": 0,
+        "name": "kirieshka",
+        "seconds": 2,
+        "secondsLeft": 0
+    },
     "Timebank": {
-        "numberOfAccounts": 1
+        "numberOfAccounts": 2
     }
 }

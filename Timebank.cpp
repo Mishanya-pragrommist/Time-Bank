@@ -33,10 +33,10 @@ void Timebank::createAccount(std::string name) {
 	}
 }
 void Timebank::changeAccount(int index) {
-	if (index < 0 || index > Accounts.size()) { //If we are already in the acc we try to change
+	if (index < 0 || index > Accounts.size()) { 
 		throw std::exception("Error: Index is out of range");
 	}
-	if (index == currentAccount->getAccountID() - 1) {
+	if (index == currentAccount->getAccountID() - 1) { //If we are already in the acc we try to change
 		throw std::exception("You are already in this account(=\n");
 	}
 	currentAccount = Accounts[index];
@@ -47,7 +47,7 @@ void Timebank::deleteAccount(int index) {
 		throw std::exception("Error: Index is out of range\n");
 	}
 	if (numberOfAccounts <= 1) {
-		throw std::exception("Error: You can't delete account if it's only one you have\n");
+		throw std::exception("Error: You can't delete account if there's only one acc left\n");
 	}
 	if (currentAccount->getAccountID() - 1 == index) {
 		throw std::exception("Error: You can't delete acount you are in\n");

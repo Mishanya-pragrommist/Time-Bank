@@ -5,10 +5,11 @@
 
 class Timebank;
 
-class FileHandler
+class FileHandler //Is used in Timebank saving/reading methods
 {
 private:
 	std::string savingFilePath = "save/savings.json";
+
 public:
 	void writeToFile(Timebank* timebank);
 	void readFromFile(Timebank* timebank);

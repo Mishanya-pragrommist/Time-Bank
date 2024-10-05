@@ -2,7 +2,8 @@
 //that will be used in GUI
 #ifndef USEFULLSTUFF_H 
 #define USEFULLSTUFF_H
-#include <iostream> //Of course, in future I will delete this
+#include <iostream> //It is here only cuz of timer which shows its work in console
+					//Of course, in future I will delete this
 
 struct Time { int hours, minutes, seconds; };
 
@@ -19,12 +20,10 @@ enum Commands //Temporary used thing. I guess its won't be usefull in GUI. But w
 	GOTO, // 9
 	DELETEACC, // 10
 	CLEARACC, // 11
-	STOP // 12
+	QUIT // 12
 };
 
-class TimeHelper 
-{
-public:
+namespace TimeHelp { //Used in Account class to make handling time easier
 	static Time convertSecondsToTime(int seconds); //For example, 4830 seconds converts to 1:20:30
 	static void addTime(Time& time, int seconds); //Firstly converts seconds to time struct, then
 												  //adds it to account/timer time

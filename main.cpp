@@ -20,7 +20,7 @@ int main()
     Timebank timebank; //It contains all of the accounts where you can handle your time
     
     //Main cycle of programm
-    while (command != STOP) {
+    while (command != QUIT) {
         startWork_handler(timebank, command);
 
         //This place will be changed according to GUI (and maybe I'll do it without enums)
@@ -48,11 +48,11 @@ int main()
             deleteAccount_handler(timebank); break;
         case GOTO:
             changeAccount_handler(timebank); break;
-        case STOP:
-            std::cout << "Programm stopped working succesfully\n"; break;
+        case QUIT:
+            std::cout << "Programm stopped working succesfully"; break;
 
         default:
-            std::cout << "Error: I dont know this command\n"; break;
+            std::cout << "Error: I dont know this command"; break;
         }
         std::cout << "\n";
     }
@@ -65,7 +65,7 @@ void startWork_handler(Timebank& timebank, int& command) {
     std::cout << "Enter command (update time-1, add time-2, get time-3," 
         << " return time - 4, start timer - 5\n"
         << " print all accs-6, create new acc-7, rename cur acc-8,\n" 
-        << "go to another acc-9, delete acc-10, clear acc-11, stop-12): ";
+        << "go to another acc-9, delete acc-10, clear acc-11, quit-12): ";
     std::cin >> command;
 
     if (std::cin.fail()) {

@@ -1,18 +1,20 @@
 #include "UsefullStuff.h"
 
-Time TimeHelper::convertSecondsToTime(int seconds) {
+Time TimeHelp::convertSecondsToTime(int seconds) {
+	int secsInHour = 3600, secsInMinute = 60;
 	Time convTime;
-	convTime.hours = seconds / 3600;
-	seconds -= convTime.hours * 3600;
 
-	convTime.minutes = seconds / 60;
-	seconds -= convTime.minutes * 60;
+	convTime.hours = seconds / secsInHour;
+	seconds -= convTime.hours * secsInHour;
+
+	convTime.minutes = seconds / secsInMinute;
+	seconds -= convTime.minutes * secsInMinute;
 
 	convTime.seconds = seconds;
 	return convTime;
 }
 
-void TimeHelper::addTime(Time& time, int seconds) {
+void TimeHelp::addTime(Time& time, int seconds) {
 	Time temp = convertSecondsToTime(seconds);
 	time.seconds += temp.seconds;
 	time.minutes += temp.minutes;
@@ -28,13 +30,14 @@ void TimeHelper::addTime(Time& time, int seconds) {
 	}
 }
 
-void TimeHelper::substractTime(Time& time, int seconds) {
+void TimeHelp::substractTime(Time& time, int seconds) {
 	Time temp = convertSecondsToTime(seconds);
-	if (time.hours < temp.hours
-		&& time.minutes < temp.minutes
-		&& time.seconds < temp.seconds) {
-		throw std::exception("Error: there is not enough time to give you\n");
+	if (time.hours < temp.hours ||
+		(time.hours == temp.hours && time.minutes < temp.minutes) ||
+		(time.hours == temp.hours && time.minutes == temp.minutes && time.seconds < temp.seconds)) {
+		throw std::exception("There is not enough time to subtract");
 	}
+
 	time.hours -= temp.hours;
 	time.minutes -= temp.minutes;
 	time.seconds -= temp.seconds;

@@ -14,8 +14,11 @@ private:
 	int accountID;
 
 public:
-	Account(std::string accountName, int accountID, Time time, Time timerTime); //Used when timebank 
-																		 //reads data from file
+	Account(std::string accountName, 
+			int accountID, 
+			Time time, 
+			Time timerTime); //Used when timebank 
+						 //reads data from file
 	Account(std::string accountName, int accountID); //Used when user creates new account
 
 	//Setters
@@ -46,7 +49,7 @@ public:
 	void substractSeconds(int seconds);
 	
 	void returnTimeToAccount(); //Return time from wastingTime to time an account
-	void clearAccount(); //Set all values as 0 and name account as "default"
+	void clearAccount(); //Set all values to 0 and rename account to "default"
 
 	void startTimer();
 
